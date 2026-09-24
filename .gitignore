@@ -1,0 +1,69 @@
+# Entornos locales y dependencias instaladas dentro del proyecto
+.python_lib/
+.venv/
+venv/
+env/
+ENV/
+runtime/
+
+# Cachés, compilados y archivos temporales
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.cache/
+tmp/
+temp/
+*.tmp
+*.temp
+*.log
+
+# Salidas generadas por el laboratorio y Spark
+salida_lab7/
+checkpoints/
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Datos descargados o convertidos localmente
+datos/
+*.xlsx
+*.xls
+*.csv
+*.parquet
+*.parquet/
+*.orc
+*.avro
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# Archivos de usuario, IDE y sistema operativo
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+
+# Archivos de credenciales y configuración local
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Artefactos grandes de modelos
+*.model
+*.model/
+*.joblib
+*.pickle
+*.pkl
+
