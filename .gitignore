@@ -28,10 +28,7 @@ spark-warehouse/
 metastore_db/
 derby.log
 
-# Datos descargados o convertidos localmente
-datos/
-*.xlsx
-*.xls
+# Datos convertidos localmente
 *.csv
 *.parquet
 *.parquet/
@@ -66,4 +63,3 @@ desktop.ini
 *.joblib
 *.pickle
 *.pkl
-
