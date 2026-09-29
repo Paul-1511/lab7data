@@ -44,6 +44,10 @@ FINAL_OUT = OUTPUT_DIR / "test_2026"
 FINAL_PREDICTIONS = PROCESSED_DIR / "predictions_test_2026T1.parquet"
 LR_FINAL_MODEL = MODELS_DIR / "final_linear_regression"
 RF_FINAL_MODEL = MODELS_DIR / "final_random_forest"
+DELIVERY_OUT = OUTPUT_DIR / "delivery"
+NOTEBOOK_PATH = ROOT / "lab7_final.ipynb"
+README_PATH = ROOT / "README.md"
+OFFICIAL_STATEMENT_PDF = "Laboratorio 7. Spark ML Lib (2026).pdf"
 
 REQUIRED_COLUMNS: tuple[str, ...] = (
     "ANIO",
@@ -179,6 +183,83 @@ FINAL_MODELS = {
     "random_forest": "pred_random_forest",
 }
 BAND_PERCENTILES = {"P25": 0.25, "P50": 0.5, "P75": 0.75, "P90": 0.9, "P95": 0.95}
+NOTEBOOK_MIN_FIGURES = 12
+COMPLEMENTARY_FIGURE = "eda/figures/descriptivos_complementarios_2025.png"
+SPARK_API_MARKERS = (
+    "load_workbook",
+    "createDataFrame",
+    "unionByName",
+    ".parquet(",
+    "percentile(",
+    "VectorAssembler",
+    "Correlation.corr",
+    "StandardScaler",
+    "KMeans(",
+    "ClusteringEvaluator",
+    "trainingCost",
+    "StringIndexer",
+    "OneHotEncoder",
+    "LinearRegression(",
+    "RandomForestRegressor(",
+    "RegressionEvaluator",
+    ".fit(train)",
+    "xxhash64",
+)
+CONCEPTUAL_QUESTIONS = (
+    "¿Por qué IV de 2025 no puede apilarse por posición de columnas con los otros archivos?",
+    "¿Qué diferencia existe entre un dato ausente porque la pregunta no corresponde y una respuesta no registrada?",
+    "¿Por qué una persona observada en dos períodos no debe eliminarse como duplicado del conjunto longitudinal?",
+    "¿Por qué el número de registros de la base filtrada no representa a todos los trabajadores del país?",
+)
+HYPERPARAMETER_MARKERS = (
+    "regParam",
+    "elasticNetParam",
+    "solver",
+    "maxIter",
+    "fitIntercept",
+    "numTrees",
+    "maxDepth",
+    "maxBins",
+    "featureSubsetStrategy",
+    "seed",
+    "predeterminado de Spark",
+)
+VERIFIED_VERSIONS = {
+    "pyspark": "3.5.1",
+    "pandas": "3.0.6",
+    "pyarrow": "25.0.1",
+    "numpy": "2.4.6",
+    "openpyxl": "3.1.5",
+    "matplotlib": "3.11.2",
+    "seaborn": "0.13.2",
+}
+README_SECTIONS = ("Arquitectura", "Datos", "Docker", "Comandos", "Resultados", "Limitaciones", "Archivos ignorados")
+CLI_FLAGS = (
+    "--preflight",
+    "--foundation",
+    "--validate-foundation",
+    "--eda-clustering",
+    "--validate-eda-clustering",
+    "--models-validation",
+    "--validate-models-validation",
+    "--final-test",
+    "--validate-final-test",
+    "--validate-delivery",
+)
+ABSOLUTE_PATH = re.compile(r"(?i)(?<![\w/])[a-z]:[\\/](?=\w)|/Users/|/home/|/opt/app|/tmp/")
+PENDING_MARKERS = re.compile(r"\b(PENDIENTE|Pendiente|pendiente|TODO|TBD|FIXME|Interprete|Use esta tabla)\b")
+CLAIM_PATTERNS = (
+    r"\bcausa(n)?\b",
+    r"\bprovoca(n)?\b",
+    r"\bocasiona(n)?\b",
+    r"\befecto causal\b",
+    r"\ba nivel nacional\b",
+    r"\btodo el pa[ií]s\b",
+    r"\btoda guatemala\b",
+    r"\bpoblaci[oó]n guatemalteca\b",
+    r"\blos guatemaltecos\b",
+    r"\brepresentativ[oa]s? de guatemala\b",
+)
 RAW_TOTAL_CONTROLS = {"2025": 203_676, "2026": 49_843, "total": 253_519}
 SENTINELS = {"", "nan", "none", "null", "na", "n/a", "#n/a", ".", "-", "inf", "+inf", "-inf", "infinity", "-infinity"}
 INTEGRAL_TEXT = re.compile(r"^([+-]?\d+)\.0+$")
@@ -2819,6 +2900,221 @@ def run_validate_final_test() -> int:
     return 0 if checks.ok else 1
 
 
+def negated(text: str, start: int) -> bool:
+    sentence_start = max(text.rfind(".", 0, start), text.rfind("\n", 0, start), text.rfind(";", 0, start))
+    return re.search(r"\b(no|ni|sin)\b", text[sentence_start + 1:start].lower()) is not None
+
+
+def unsupported_claims(text: str) -> list[str]:
+    findings = []
+    for pattern in CLAIM_PATTERNS:
+        for match in re.finditer(pattern, text, flags=re.IGNORECASE):
+            if not negated(text, match.start()):
+                findings.append(text[max(0, match.start() - 60):match.end() + 20].replace("\n", " "))
+    return findings
+
+
+def text_hygiene(label: str, text: str, checks: CheckLog) -> None:
+    absolute = ABSOLUTE_PATH.findall(text)
+    checks.require(not absolute, f"{label}: rutas absolutas {absolute[:3]}")
+    pending = PENDING_MARKERS.findall(text)
+    checks.require(not pending, f"{label}: marcadores pendientes o instrucciones {pending[:3]}")
+    checks.require("sintetic" not in text.lower() and "sintétic" not in text.lower(), f"{label}: menciona resultados sinteticos")
+    claims = unsupported_claims(text)
+    checks.require(not claims, f"{label}: afirmaciones causales o nacionales {claims[:2]}")
+
+
+def notebook_texts(notebook: dict[str, Any]) -> tuple[str, str, str]:
+    markdown = "\n".join("".join(cell["source"]) for cell in notebook["cells"] if cell["cell_type"] == "markdown")
+    code = "\n".join("".join(cell["source"]) for cell in notebook["cells"] if cell["cell_type"] == "code")
+    outputs = []
+    for cell in notebook["cells"]:
+        for output in cell.get("outputs", []):
+            outputs.append("".join(output.get("text", "")))
+            outputs.append("".join(output.get("data", {}).get("text/plain", "")))
+            outputs.append("".join(output.get("data", {}).get("text/markdown", "")))
+    return markdown, code, "\n".join(outputs)
+
+
+def expected_numbers() -> list[str]:
+    final = read_json(FINAL_OUT / "final_test_metrics.json")["metricas"]
+    validation = read_json(MODELS_VALIDATION_OUT / "models_validation_summary.json")["seleccion"]
+    kmeans = read_json(EDA_OUT / "kmeans_seleccion.json")
+    silhouette = next(item["silueta"] for item in kmeans["resultados"] if item["k"] == kmeans["k_seleccionado"])
+    values = [f"{final[name]['rmse']:,.2f}" for name in FINAL_MODELS]
+    values += [f"{validation[name]['rmse']:,.2f}" for name in FINAL_MODELS]
+    values += [f"{silhouette:.4f}", f"{TRAIN_ROWS:,}", f"{VALIDATION_ROWS:,}", f"{FINAL_TRAIN_ROWS:,}", f"{TEST_ROWS:,}"]
+    return values
+
+
+def delivery_phase_checks(checks: CheckLog) -> None:
+    validations = {
+        "fundacion": FOUNDATION_OUT / "validation_foundation.json",
+        "eda_clustering": EDA_OUT / "validation_eda_clustering.json",
+        "seleccion_temporal": MODELS_VALIDATION_OUT / "validation_models_validation.json",
+        "prueba_final": FINAL_OUT / "validation_final_test.json",
+    }
+    for name, path in validations.items():
+        ok = path.exists() and read_json(path).get("ok") is True and not read_json(path).get("fallas")
+        checks.require(ok, f"fase {name} sin validacion OK en {relative(path)}")
+        print(f"  {name}: {'OK' if ok else 'FALLA'}")
+    if not checks.ok:
+        return
+    foundation = read_json(FOUNDATION_OUT / "foundation_summary.json")
+    checks.require(
+        foundation["elegibles_por_periodo"] == {source.periodo: source.elegibles for source in SOURCES}, "conteos elegibles por periodo"
+    )
+    eda = read_json(EDA_OUT / "eda_summary.json")
+    checks.require(eda["entrada"]["n"] == FINAL_TRAIN_ROWS, "n de EDA")
+    models = read_json(MODELS_VALIDATION_OUT / "models_validation_summary.json")
+    checks.require(models["n_entrenamiento"] == TRAIN_ROWS and models["n_validacion"] == VALIDATION_ROWS, "n de seleccion temporal")
+    final_config = read_json(FINAL_OUT / "final_test_config.json")
+    final_metrics_file = read_json(FINAL_OUT / "final_test_metrics.json")
+    final_summary = read_json(FINAL_OUT / "final_test_summary.json")
+    checks.require(all(values["n"] == TEST_ROWS for values in final_metrics_file["metricas"].values()), "n de prueba 2026")
+    checks.require(final_summary["metricas"] == final_metrics_file["metricas"], "metricas finales inconsistentes entre archivos")
+    for algorithm in ("regresion_lineal", "random_forest"):
+        selected = models["seleccion"][algorithm]
+        checks.require(
+            final_config[algorithm] == {"config_id": selected["config_id"], **selected["parametros"]},
+            f"{algorithm}: configuracion final distinta de la seleccion 2025T4",
+        )
+    stamps = [foundation["generado_utc"], eda["generado_utc"], models["generado_utc"], final_summary["generado_utc"]]
+    checks.require(stamps == sorted(stamps), "orden temporal de las fases incoherente")
+    for path in sorted(item for item in OUTPUT_DIR.rglob("*.json") if DELIVERY_OUT not in item.parents):
+        found = ABSOLUTE_PATH.findall(path.read_text(encoding="utf-8"))
+        checks.require(not found, f"{relative(path)}: rutas absolutas {found[:2]}")
+
+
+def delivery_notebook_checks(checks: CheckLog) -> None:
+    if not NOTEBOOK_PATH.exists():
+        checks.require(False, f"falta {relative(NOTEBOOK_PATH)}")
+        return
+    notebook = json.loads(NOTEBOOK_PATH.read_text(encoding="utf-8"))
+    code_cells = [cell for cell in notebook["cells"] if cell["cell_type"] == "code"]
+    counts = [cell.get("execution_count") for cell in code_cells]
+    checks.require(bool(code_cells) and all(counts), "notebook sin ejecutar completamente")
+    checks.require(counts == list(range(1, len(code_cells) + 1)), "ejecucion del notebook no secuencial")
+    errors = [output for cell in code_cells for output in cell.get("outputs", []) if output.get("output_type") == "error"]
+    checks.require(not errors, f"notebook con {len(errors)} errores")
+    stderr = [output for cell in code_cells for output in cell.get("outputs", []) if output.get("name") == "stderr"]
+    checks.require(not stderr, f"notebook con {len(stderr)} salidas stderr")
+    checks.require(all(cell.get("outputs") for cell in code_cells), "celdas de codigo sin salida")
+    images = sum(1 for cell in code_cells for output in cell.get("outputs", []) if "image/png" in output.get("data", {}))
+    checks.require(images >= NOTEBOOK_MIN_FIGURES, f"notebook con {images} figuras < {NOTEBOOK_MIN_FIGURES}")
+    markdown, code, outputs = notebook_texts(notebook)
+    for number in range(1, 9):
+        checks.require(re.search(rf"Ejercicio {number}\b", markdown) is not None, f"notebook sin Ejercicio {number}")
+    references = set(re.findall(r"[\"']((?:foundation|eda|models|test_2026)/[\w./-]+\.(?:json|png))[\"']", code))
+    checks.require(len(references) >= 20, f"notebook con solo {len(references)} referencias a artefactos")
+    missing = sorted(reference for reference in references if not (OUTPUT_DIR / reference).exists())
+    checks.require(not missing, f"notebook referencia artefactos inexistentes {missing}")
+    recalculation = re.findall(r"SparkSession|pyspark|\.fit\(|read\.parquet|read_excel|openpyxl|\.xlsx", code)
+    checks.require(not recalculation, f"notebook recalcula o lee fuentes: {sorted(set(recalculation))}")
+    text_hygiene("notebook", "\n".join((markdown, code, outputs)), checks)
+    absent = [value for value in expected_numbers() if value not in markdown]
+    checks.require(not absent, f"notebook sin cifras reales esperadas {absent}")
+    delivery_notebook_content_checks(markdown, code, outputs, checks)
+    print(f"  notebook: {len(code_cells)} celdas de codigo, {images} figuras, {len(references)} artefactos referenciados")
+
+
+def delivery_notebook_content_checks(markdown: str, code: str, outputs: str, checks: CheckLog) -> None:
+    api_missing = [marker for marker in SPARK_API_MARKERS if marker not in outputs]
+    checks.require(not api_missing, f"notebook no muestra el codigo Spark real: faltan {api_missing}")
+    checks.require("show_code(" in code and "lab7_final.py" in code, "notebook sin utilidad de lectura del codigo real")
+    for question in CONCEPTUAL_QUESTIONS:
+        checks.require(question in markdown, f"notebook sin respuesta a: {question}")
+    manifest = read_json(FOUNDATION_OUT / "manifest.json")
+    rows = {item["periodo"]: item["filas_datos"] for item in manifest["fuentes"]}
+    missing = read_json(FOUNDATION_OUT / "audit_missing.json")
+    expected_percent = f"{100 * missing['2025T1']['faltantes_crudos']['P05D01'] / rows['2025T1']:.2f} %"
+    checks.require(expected_percent in markdown, f"notebook sin porcentaje de faltantes {expected_percent}")
+    checks.require("porcentaje_faltantes" in code and "filas_datos" in code, "notebook no calcula porcentajes de faltantes")
+    figure = OUTPUT_DIR / COMPLEMENTARY_FIGURE
+    checks.require(COMPLEMENTARY_FIGURE.split("/")[-1] in code, "notebook sin figura descriptiva complementaria")
+    checks.require(figure.exists() and figure.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n", f"falta {relative(figure)}")
+    hyper_missing = [marker for marker in HYPERPARAMETER_MARKERS if marker not in outputs]
+    checks.require(not hyper_missing, f"notebook sin tablas de hiperparametros: faltan {hyper_missing}")
+    comparison = re.search(r"no linea", markdown) and re.search(r"interacci", markdown) and re.search(r"aditiv", markdown)
+    checks.require(bool(comparison), "notebook sin explicacion comparativa de regresion lineal y Random Forest")
+    groups = read_json(FINAL_OUT / "errores_por_grupo.json")
+    doctorate = next(item for item in groups["nivel_educativo"] if item["etiqueta"] == "Doctorado")
+    signed = f"{doctorate['random_forest']['error_medio']:,.2f}"
+    checks.require(signed in markdown, f"notebook sin interpretacion del error medio por grupo ({signed})")
+    checks.require("subestimación" in markdown and "sobreestimación" in markdown, "notebook sin signo del error medio")
+    checks.require("codigo_sha256" in markdown, "notebook sin explicacion de hashes historicos")
+    checks.require("DESCONOCIDO" in markdown and "diccionario" in markdown.lower(), "notebook sin validacion contra diccionarios")
+
+
+def delivery_readme_checks(checks: CheckLog) -> None:
+    if not README_PATH.exists():
+        checks.require(False, "falta README.md")
+        return
+    text = README_PATH.read_text(encoding="utf-8")
+    for heading in README_SECTIONS:
+        checks.require(re.search(rf"^#+ .*{heading}", text, flags=re.MULTILINE | re.IGNORECASE) is not None, f"README sin seccion {heading}")
+    for flag in CLI_FLAGS:
+        checks.require(flag in text, f"README sin comando {flag}")
+    for name in ("Dockerfile.lab7", "compose.lab7.yml", "requirements.txt", "lab7_final.ipynb", "lab7_final.py"):
+        checks.require(name in text, f"README no menciona {name}")
+    absent = [value for value in expected_numbers() if value not in text]
+    checks.require(not absent, f"README sin cifras reales esperadas {absent}")
+    text_hygiene("README", text, checks)
+
+
+def delivery_docker_checks(checks: CheckLog) -> None:
+    dockerfile = (ROOT / "Dockerfile.lab7").read_text(encoding="utf-8") if (ROOT / "Dockerfile.lab7").exists() else ""
+    base = next((line for line in dockerfile.splitlines() if line.strip().upper().startswith("FROM ")), "")
+    checks.require(base.startswith("FROM python:3.11"), f"Dockerfile.lab7 no parte de Python 3.11 publico: {base!r}")
+    checks.require("spark_practica" not in dockerfile, "Dockerfile.lab7 depende de spark_practica")
+    checks.require("openjdk-17" in dockerfile, "Dockerfile.lab7 sin Java 17")
+    checks.require("requirements.txt" in dockerfile, "Dockerfile.lab7 no instala requirements.txt")
+    requirements_path = ROOT / "requirements.txt"
+    lines = [line.strip() for line in requirements_path.read_text(encoding="utf-8").splitlines() if line.strip()] if requirements_path.exists() else []
+    checks.require(bool(lines) and all(re.fullmatch(r"[A-Za-z0-9_.-]+==[\w.]+", line) for line in lines), "requirements.txt sin versiones fijadas")
+    pins = dict(line.split("==") for line in lines)
+    for package, version in VERIFIED_VERSIONS.items():
+        checks.require(pins.get(package) == version, f"requirements.txt: {package}=={pins.get(package)} distinto de {version}")
+    dockerignore = (ROOT / ".dockerignore").read_text(encoding="utf-8").split() if (ROOT / ".dockerignore").exists() else []
+    checks.require(dockerignore[:1] == ["*"] and "!requirements.txt" in dockerignore, ".dockerignore no limita el contexto")
+    compose = (ROOT / "compose.lab7.yml").read_text(encoding="utf-8") if (ROOT / "compose.lab7.yml").exists() else ""
+    for fragment in ("dockerfile: Dockerfile.lab7", "container_name: lab7-pyspark", "127.0.0.1:8888:8888", "./:/opt/app/lab7"):
+        checks.require(fragment in compose, f"compose.lab7.yml sin {fragment}")
+    checks.require("spark_practica" not in compose, "compose.lab7.yml depende de spark_practica")
+
+
+def delivery_repository_checks(checks: CheckLog) -> None:
+    gitignore = {line.strip() for line in (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()}
+    checks.require("/models/" in gitignore and "models/" not in gitignore, ".gitignore debe ignorar solo /models/")
+    checks.require("data_processed/" in gitignore, ".gitignore no ignora data_processed/")
+    checks.require("datos/" in gitignore or "datos/diccionarios/" in gitignore, ".gitignore no ignora diccionarios")
+    checks.require("GUIA_REPLICACION_LAB7.md" in gitignore, ".gitignore no ignora la guia privada")
+    checks.require(not gitignore & {"outputs/", "outputs", "*.json", "*.png", "*.ipynb"}, ".gitignore ignora artefactos de entrega")
+    skipped = {".git", ".venv", "datos", "data_processed", "models"}
+    pdfs = [
+        relative(path)
+        for path in ROOT.rglob("*.pdf")
+        if not skipped & set(path.relative_to(ROOT).parts) and path.name != OFFICIAL_STATEMENT_PDF
+    ]
+    checks.require(not pdfs, f"PDF generados no permitidos {pdfs}")
+
+
+def run_validate_delivery() -> int:
+    checks = CheckLog()
+    print("Fases previas:")
+    delivery_phase_checks(checks)
+    print("Notebook:")
+    delivery_notebook_checks(checks)
+    print("README, Docker y repositorio:")
+    delivery_readme_checks(checks)
+    delivery_docker_checks(checks)
+    delivery_repository_checks(checks)
+    write_json(DELIVERY_OUT / "validation_delivery.json", {"generado_utc": utc_now(), **checks.as_dict()})
+    status = "OK" if checks.ok else "FALLA"
+    print(f"VALIDACION_ENTREGA={status} controles={checks.passed} fallas={len(checks.failures)} advertencias={len(checks.warnings)}")
+    return 0 if checks.ok else 1
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Laboratorio 7 - flujo final reproducible con Spark")
     group = parser.add_mutually_exclusive_group(required=True)
@@ -2831,6 +3127,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     group.add_argument("--validate-models-validation", action="store_true", help="valida seleccion temporal persistida")
     group.add_argument("--final-test", action="store_true", help="reentrena con 2025 y evalua una vez en 2026T1")
     group.add_argument("--validate-final-test", action="store_true", help="valida la prueba final persistida")
+    group.add_argument("--validate-delivery", action="store_true", help="valida notebook, README, Docker y artefactos de entrega")
     parser.add_argument("--force", action="store_true", help="reprocesa periodos aunque existan artefactos vigentes")
     parser.add_argument("--only", nargs="+", choices=list(SOURCES_BY_PERIOD), help="procesa solo estos periodos")
     return parser.parse_args(argv)
@@ -2854,6 +3151,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_final_test(force=args.force)
     if args.validate_final_test:
         return run_validate_final_test()
+    if args.validate_delivery:
+        return run_validate_delivery()
     return run_validate_foundation()
 
 

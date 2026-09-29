@@ -65,7 +65,8 @@ desktop.ini
 *.pkl
 
 datos/
+datos/diccionarios/
 data_processed/
-models/
+/models/
 CONTEXTO_CLAUDE_LAB7.md
 GUIA_REPLICACION_LAB7.md

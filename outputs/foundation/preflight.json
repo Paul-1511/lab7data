@@ -1,5 +1,5 @@
 {
-  "generado_utc": "2026-09-29T06:04:46+00:00",
+  "generado_utc": "2026-09-29T15:33:15+00:00",
   "entorno": {
     "python": "3.11.16",
     "plataforma": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
@@ -17,7 +17,7 @@
     "ps_disponible": true,
     "memoria": {
       "mem_total_gib": 7.76,
-      "mem_available_gib": 7.17,
+      "mem_available_gib": 7.08,
       "cgroup_limit_gib": null
     },
     "spark_master": "local[2]",

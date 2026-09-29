@@ -1,13 +1,29 @@
-FROM spark_practica-pyspark:latest
+FROM python:3.11.16-slim-bookworm
 
-USER root
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYSPARK_PYTHON=python3 \
+    PYSPARK_DRIVER_PYTHON=python3 \
+    JAVA_HOME=/opt/java
+
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends procps \
+    && apt-get install -y --no-install-recommends openjdk-17-jre-headless procps \
     && rm -rf /var/lib/apt/lists/* \
-    && python -m pip install --no-cache-dir openpyxl==3.1.5
+    && ln -s "$(dirname "$(dirname "$(readlink -f "$(command -v java)")")")" /opt/java
+
+COPY requirements.txt /tmp/requirements.txt
+RUN python -m pip install -r /tmp/requirements.txt \
+    && rm /tmp/requirements.txt \
+    && useradd --create-home --uid 1000 --shell /bin/bash spark
 
 USER spark
-RUN python -c "import openpyxl, pyspark; print('openpyxl', openpyxl.__version__, 'pyspark', pyspark.__version__)" \
+RUN python -c "import sys, pyspark, openpyxl; assert sys.version_info[:2] == (3, 11); assert pyspark.__version__ == '3.5.1'; print('python', sys.version.split()[0], 'pyspark', pyspark.__version__)" \
+    && java -version \
     && ps --version
 
 WORKDIR /opt/app/lab7
+EXPOSE 8888
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser"]
