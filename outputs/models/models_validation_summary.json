@@ -1,0 +1,131 @@
+{
+  "generado_utc": "2026-09-29T06:55:07+00:00",
+  "segundos": 122.1,
+  "spark": "3.5.1",
+  "codigo_sha256": "30858f8fda9800be5abc5d7a11c17aeb848c70f8c297fdf17ddcbdd59b63ab8b",
+  "entrada": {
+    "ruta": "data_processed/eligible_2025.parquet",
+    "archivos": 1,
+    "bytes": 1127750,
+    "sha256": "9fe539a9eb4036ba0f138de345094c358ad8f51977e417ee52fb7166612cfb77"
+  },
+  "n_entrenamiento": 40361,
+  "n_validacion": 12664,
+  "media_entrenamiento": 3383.124996902951,
+  "seleccion": {
+    "baseline_media": {
+      "algoritmo": "baseline_media",
+      "config_id": "baseline_media_T1_T3",
+      "parametros": {
+        "media_entrenamiento": 3383.124996902951
+      },
+      "mae": 1672.5026056435038,
+      "rmse": 2889.5714322659232,
+      "r2": -0.003131603852470688,
+      "n_validacion": 12664,
+      "seleccionado": true
+    },
+    "regresion_lineal": {
+      "algoritmo": "regresion_lineal",
+      "config_id": "lr_reg_0.0",
+      "parametros": {
+        "regParam": 0.0,
+        "elasticNetParam": 0.0
+      },
+      "mae": 1210.1374804326135,
+      "rmse": 2186.4195786682294,
+      "r2": 0.42567455403897536,
+      "n_validacion": 12664,
+      "segundos": 8.0,
+      "seleccionado": true
+    },
+    "random_forest": {
+      "algoritmo": "random_forest",
+      "config_id": "rf_t100_d10",
+      "parametros": {
+        "numTrees": 100,
+        "maxDepth": 10
+      },
+      "mae": 1074.319409895994,
+      "rmse": 1985.5950331862625,
+      "r2": 0.5263337962688368,
+      "n_validacion": 12664,
+      "segundos": 26.0,
+      "seleccionado": true
+    }
+  },
+  "lider_provisional_2025T4": {
+    "algoritmo": "random_forest",
+    "config_id": "rf_t100_d10",
+    "rmse": 1985.5950331862625
+  },
+  "detalles_modelos": {
+    "regresion_lineal": {
+      "intercepto": 3383.1249969029564,
+      "coeficientes_espacio_estandarizado": {
+        "edad": 275.56995185700913,
+        "antiguedad": 183.28309701104828,
+        "horas_semanales": 303.5827290229218,
+        "nivel_educativo=Ninguno": -330.72406654086933,
+        "nivel_educativo=Preprimaria": -91.87446089182434,
+        "nivel_educativo=Primaria": -344.97337253177517,
+        "nivel_educativo=Básico": -198.56258289333877,
+        "nivel_educativo=Diversificado": 38.43969057866765,
+        "nivel_educativo=Superior": 592.0642826124196,
+        "nivel_educativo=Maestría": 829.8674607820216,
+        "nivel_educativo=Doctorado": 299.92700682552834,
+        "nivel_educativo=categoria_no_vista": 0.0,
+        "categoria_ocupacional=Empleado de gobierno": 466.73035361032487,
+        "categoria_ocupacional=Empleado de empresa privada": 125.07602390970806,
+        "categoria_ocupacional=Jornalero o peón": -270.3986488696474,
+        "categoria_ocupacional=Servicio doméstico": -366.56981310362954,
+        "categoria_ocupacional=categoria_no_vista": 0.0,
+        "dominio=Urbano Metropolitano": 172.0932627070097,
+        "dominio=Resto Urbano": -101.69481057983911,
+        "dominio=Rural Nacional": -87.97956550455962,
+        "dominio=categoria_no_vista": 0.0
+      },
+      "n_coeficientes": 21,
+      "iteraciones": 13
+    },
+    "random_forest": {
+      "importancias": {
+        "nivel_educativo=Maestría": 0.18547000158853966,
+        "nivel_educativo=Superior": 0.14406919399018508,
+        "horas_semanales": 0.10571504380068394,
+        "categoria_ocupacional=Empleado de gobierno": 0.10127506271993236,
+        "edad": 0.10038575803335457,
+        "antiguedad": 0.07750758636910757,
+        "categoria_ocupacional=Jornalero o peón": 0.07217282278122422,
+        "categoria_ocupacional=Empleado de empresa privada": 0.060868533096724346,
+        "categoria_ocupacional=Servicio doméstico": 0.03299996984543819,
+        "dominio=Urbano Metropolitano": 0.028450198705449507,
+        "nivel_educativo=Doctorado": 0.024849473354853494,
+        "nivel_educativo=Primaria": 0.0234478764439725,
+        "nivel_educativo=Diversificado": 0.022018701601864532,
+        "dominio=Resto Urbano": 0.006274420139593905,
+        "nivel_educativo=Ninguno": 0.006005401440598389,
+        "nivel_educativo=Básico": 0.00492893366302068,
+        "dominio=Rural Nacional": 0.0033825794479922363,
+        "nivel_educativo=Preprimaria": 0.0001784429774647889,
+        "nivel_educativo=categoria_no_vista": 0.0,
+        "categoria_ocupacional=categoria_no_vista": 0.0,
+        "dominio=categoria_no_vista": 0.0
+      },
+      "n_arboles": 100,
+      "nodos_totales": 85340
+    }
+  },
+  "salidas": {
+    "predicciones": "data_processed/predictions_validation_2025T4.parquet",
+    "modelo_regresion_lineal": "models/validation_linear_regression",
+    "modelo_random_forest": "models/validation_random_forest",
+    "figura_rmse": "outputs/models/figures/rmse_validacion_2025T4.png"
+  },
+  "verificacion": {
+    "ok": true,
+    "controles_aprobados": 8,
+    "fallas": [],
+    "advertencias": []
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "particion": {
+    "entrenamiento": [
+      "2025T1",
+      "2025T2",
+      "2025T3"
+    ],
+    "validacion": "2025T4",
+    "n_entrenamiento": 40361,
+    "n_validacion": 12664,
+    "datos_2026_usados": false,
+    "randomSplit": false,
+    "cross_validation": false
+  },
+  "objetivo": "salario_mensual",
+  "predictores_numericos": [
+    "edad",
+    "antiguedad",
+    "horas_semanales"
+  ],
+  "predictores_categoricos": [
+    "nivel_educativo",
+    "categoria_ocupacional",
+    "dominio"
+  ],
+  "preprocesamiento_categorico": "StringIndexer(handleInvalid=keep, stringOrderType=alphabetAsc) + OneHotEncoder(handleInvalid=keep, dropLast=True)",
+  "regresion_lineal": {
+    "estandarizacion": "StandardScaler(withMean=True, withStd=True) sobre el vector ensamblado; LinearRegression(standardization=False)",
+    "solver": "l-bfgs",
+    "max_iter": 200,
+    "configuraciones": [
+      {
+        "config_id": "lr_reg_0.0",
+        "regParam": 0.0,
+        "elasticNetParam": 0.0
+      },
+      {
+        "config_id": "lr_reg_10.0",
+        "regParam": 10.0,
+        "elasticNetParam": 0.0
+      },
+      {
+        "config_id": "lr_reg_100.0",
+        "regParam": 100.0,
+        "elasticNetParam": 0.0
+      },
+      {
+        "config_id": "lr_reg_1000.0",
+        "regParam": 1000.0,
+        "elasticNetParam": 0.0
+      }
+    ],
+    "escala_regParam": "Spark expresa regParam en unidades del objetivo (penalizacion efectiva regParam/desviacion del salario)",
+    "codificacion": "OneHotEncoder con handleInvalid=keep conserva todas las categorias vistas y una columna __unknown; la colinealidad con el intercepto se controla con ridge"
+  },
+  "random_forest": {
+    "estandarizacion": "ninguna",
+    "semilla": 3066,
+    "max_bins": 32,
+    "feature_subset_strategy": "onethird",
+    "configuraciones": [
+      {
+        "config_id": "rf_t50_d6",
+        "numTrees": 50,
+        "maxDepth": 6
+      },
+      {
+        "config_id": "rf_t100_d8",
+        "numTrees": 100,
+        "maxDepth": 8
+      },
+      {
+        "config_id": "rf_t100_d10",
+        "numTrees": 100,
+        "maxDepth": 10
+      }
+    ]
+  },
+  "criterio_seleccion": "menor RMSE en 2025T4 por algoritmo",
+  "ajuste_preprocesamiento": "solo 2025T1-T3 dentro de cada Pipeline",
+  "recorte_objetivo_o_predicciones": false
+}

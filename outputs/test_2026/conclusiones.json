@@ -1,0 +1,12 @@
+{
+  "mejor_rmse_2026": "random_forest",
+  "enunciados": [
+    "Las configuraciones lr_reg_0.0 y rf_t100_d10 se congelaron con 2025T4 y se evaluaron una sola vez en 13,258 registros de 2026T1.",
+    "Regresión lineal: MAE Q1,240.71, RMSE Q2,163.75, R² 0.4307 y error medio Q120.55; RMSE 24.6% menor que el baseline (Q2,871.42) y -22.67 Q respecto de 2025T4.",
+    "Random Forest: MAE Q1,103.68, RMSE Q1,961.02, R² 0.5324 y error medio Q108.17; RMSE 31.7% menor que el baseline (Q2,871.42) y -24.58 Q respecto de 2025T4.",
+    "En 2026T1 el menor RMSE corresponde a Random Forest; el lider provisional de 2025T4 fue random_forest. Este resultado se reporta y no modifica ninguna decision.",
+    "Regresión lineal subestima sistematicamente los salarios >= P95 (Q8,000; n=812): error medio Q4,887.11, 94.0% de residuos positivos y prediccion media igual a 57.9% del salario real medio; en el resto el error medio es Q-190.43. Mayor MAE por educacion: Doctorado (Q12,919.31); por dominio: Urbano Metropolitano (Q1,446.09).",
+    "Random Forest subestima sistematicamente los salarios >= P95 (Q8,000; n=812): error medio Q4,252.24, 91.5% de residuos positivos y prediccion media igual a 63.4% del salario real medio; en el resto el error medio es Q-162.19. Mayor MAE por educacion: Doctorado (Q11,265.46); por dominio: Urbano Metropolitano (Q1,317.31).",
+    "Los patrones describen asociaciones en los registros elegibles no ponderados; no establecen causalidad ni representan a toda Guatemala."
+  ]
+}

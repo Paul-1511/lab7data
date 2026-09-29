@@ -1,0 +1,173 @@
+{
+  "umbrales_percentiles_2026": {
+    "P25": 2000.0,
+    "P50": 3200.0,
+    "P75": 4080.0,
+    "P90": 6000.0,
+    "P95": 8000.0
+  },
+  "bandas": [
+    {
+      "grupo": "<P25",
+      "etiqueta": "<P25",
+      "n": 3299,
+      "salario_real_medio": 1141.6329190663837,
+      "baseline_media": {
+        "mae": 2280.0512864971456,
+        "error_medio": -2280.0512864971456,
+        "rmse": 2320.585232109703,
+        "prediccion_media": 3421.684205563599,
+        "porcentaje_subestimados": 0.0
+      },
+      "regresion_lineal": {
+        "mae": 985.7118413399185,
+        "error_medio": -844.1400737802381,
+        "rmse": 1317.2026332928383,
+        "prediccion_media": 1985.7729928466206,
+        "porcentaje_subestimados": 19.70294028493483
+      },
+      "random_forest": {
+        "mae": 851.444853088784,
+        "error_medio": -786.190783988199,
+        "rmse": 1132.9961262994962,
+        "prediccion_media": 1927.8237030545838,
+        "porcentaje_subestimados": 13.246438314640802
+      }
+    },
+    {
+      "grupo": "P25-P50",
+      "etiqueta": "P25-P50",
+      "n": 3130,
+      "salario_real_medio": 2518.3952076677315,
+      "baseline_media": {
+        "mae": 903.2889978956739,
+        "error_medio": -903.2889978956739,
+        "rmse": 981.3936984697337,
+        "prediccion_media": 3421.684205563591,
+        "porcentaje_subestimados": 0.0
+      },
+      "regresion_lineal": {
+        "mae": 910.9316912415586,
+        "error_medio": -325.92372303590275,
+        "rmse": 1230.3980350768445,
+        "prediccion_media": 2844.3189307036296,
+        "porcentaje_subestimados": 42.26837060702876
+      },
+      "random_forest": {
+        "mae": 734.572051815569,
+        "error_medio": -311.3779440898748,
+        "rmse": 1053.0618544077909,
+        "prediccion_media": 2829.773151757608,
+        "porcentaje_subestimados": 41.43769968051118
+      }
+    },
+    {
+      "grupo": "P50-P75",
+      "etiqueta": "P50-P75",
+      "n": 3512,
+      "salario_real_medio": 3718.0415717539863,
+      "baseline_media": {
+        "mae": 344.5882721220398,
+        "error_medio": 296.3573661905898,
+        "rmse": 396.7320398990543,
+        "prediccion_media": 3421.6842055636075,
+        "porcentaje_subestimados": 83.54214123006834
+      },
+      "regresion_lineal": {
+        "mae": 822.9047712963436,
+        "error_medio": -65.55331032022328,
+        "rmse": 1187.9305499005704,
+        "prediccion_media": 3783.594882074214,
+        "porcentaje_subestimados": 54.783599088838265
+      },
+      "random_forest": {
+        "mae": 719.0906201794483,
+        "error_medio": -30.041258166643704,
+        "rmse": 1143.5536532492126,
+        "prediccion_media": 3748.0828299206187,
+        "porcentaje_subestimados": 56.03644646924829
+      }
+    },
+    {
+      "grupo": "P75-P90",
+      "etiqueta": "P75-P90",
+      "n": 1775,
+      "salario_real_medio": 4709.101971830986,
+      "baseline_media": {
+        "mae": 1287.4177662675493,
+        "error_medio": 1287.4177662675493,
+        "rmse": 1356.787726397581,
+        "prediccion_media": 3421.684205563479,
+        "porcentaje_subestimados": 100.0
+      },
+      "regresion_lineal": {
+        "mae": 1093.1205736367053,
+        "error_medio": 400.9676940493149,
+        "rmse": 1417.5247504628717,
+        "prediccion_media": 4308.134277781674,
+        "porcentaje_subestimados": 67.88732394366197
+      },
+      "random_forest": {
+        "mae": 1100.832647402542,
+        "error_medio": 410.60232596238353,
+        "rmse": 1417.8559876305208,
+        "prediccion_media": 4298.499645868602,
+        "porcentaje_subestimados": 72.28169014084507
+      }
+    },
+    {
+      "grupo": "P90-P95",
+      "etiqueta": "P90-P95",
+      "n": 730,
+      "salario_real_medio": 6557.105479452055,
+      "baseline_media": {
+        "mae": 3135.421273888618,
+        "error_medio": 3135.421273888618,
+        "rmse": 3183.70736874354,
+        "prediccion_media": 3421.6842055634224,
+        "porcentaje_subestimados": 100.0
+      },
+      "regresion_lineal": {
+        "mae": 1830.5433585639473,
+        "error_medio": 1306.0193844601733,
+        "rmse": 2189.824756506816,
+        "prediccion_media": 5251.086094991878,
+        "porcentaje_subestimados": 85.47945205479452
+      },
+      "random_forest": {
+        "mae": 1842.8859679735128,
+        "error_medio": 1268.8954396979116,
+        "rmse": 2191.2996110298777,
+        "prediccion_media": 5288.210039754137,
+        "porcentaje_subestimados": 80.82191780821918
+      }
+    },
+    {
+      "grupo": ">=P95",
+      "etiqueta": ">=P95",
+      "n": 812,
+      "salario_real_medio": 11605.160098522167,
+      "baseline_media": {
+        "mae": 8183.475892958673,
+        "error_medio": 8183.475892958673,
+        "rmse": 9757.733870281158,
+        "prediccion_media": 3421.6842055634074,
+        "porcentaje_subestimados": 100.0
+      },
+      "regresion_lineal": {
+        "mae": 5147.332070851056,
+        "error_medio": 4887.113579705677,
+        "rmse": 6982.209064735724,
+        "prediccion_media": 6718.046518816503,
+        "porcentaje_subestimados": 93.96551724137932
+      },
+      "random_forest": {
+        "mae": 4556.284760154762,
+        "error_medio": 4252.2401678603055,
+        "rmse": 6239.551368874336,
+        "prediccion_media": 7352.919930661865,
+        "porcentaje_subestimados": 91.50246305418719
+      }
+    }
+  ]
+}

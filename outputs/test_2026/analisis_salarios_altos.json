@@ -1,0 +1,34 @@
+{
+  "umbral_p95": 8000.0,
+  "n_banda_alta": 812,
+  "criterio_subestimacion_sistematica": "error medio > 0 y mas del 50% de residuos positivos en la banda >= P95",
+  "modelos": {
+    "baseline_media": {
+      "error_medio_banda_alta": 8183.475892958673,
+      "porcentaje_subestimados_banda_alta": 100.0,
+      "mae_banda_alta": 8183.475892958673,
+      "prediccion_media_sobre_real_medio": 0.2948416201512924,
+      "error_medio_resto": -380.39150108004065,
+      "correlacion_salario_residuo": 1.0,
+      "subestimacion_sistematica": true
+    },
+    "regresion_lineal": {
+      "error_medio_banda_alta": 4887.113579705677,
+      "porcentaje_subestimados_banda_alta": 93.96551724137932,
+      "mae_banda_alta": 5147.332070851056,
+      "prediccion_media_sobre_real_medio": 0.5788844325958069,
+      "error_medio_resto": -190.4283122894537,
+      "correlacion_salario_residuo": 0.7712609976268319,
+      "subestimacion_sistematica": true
+    },
+    "random_forest": {
+      "error_medio_banda_alta": 4252.2401678603055,
+      "porcentaje_subestimados_banda_alta": 91.50246305418719,
+      "mae_banda_alta": 4556.284760154762,
+      "prediccion_media_sobre_real_medio": 0.6335905638732382,
+      "error_medio_resto": -162.1925486499213,
+      "correlacion_salario_residuo": 0.7487131287582152,
+      "subestimacion_sistematica": true
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "baseline": {
+    "algoritmo": "baseline_media",
+    "config_id": "baseline_media_T1_T3",
+    "parametros": {
+      "media_entrenamiento": 3383.124996902951
+    },
+    "mae": 1672.5026056435038,
+    "rmse": 2889.5714322659232,
+    "r2": -0.003131603852470688,
+    "n_validacion": 12664,
+    "seleccionado": true
+  },
+  "candidatos": [
+    {
+      "algoritmo": "regresion_lineal",
+      "config_id": "lr_reg_0.0",
+      "parametros": {
+        "regParam": 0.0,
+        "elasticNetParam": 0.0
+      },
+      "mae": 1210.1374804326135,
+      "rmse": 2186.4195786682294,
+      "r2": 0.42567455403897536,
+      "n_validacion": 12664,
+      "segundos": 8.0,
+      "seleccionado": true
+    },
+    {
+      "algoritmo": "regresion_lineal",
+      "config_id": "lr_reg_10.0",
+      "parametros": {
+        "regParam": 10.0,
+        "elasticNetParam": 0.0
+      },
+      "mae": 1209.6704719605884,
+      "rmse": 2186.5514189070823,
+      "r2": 0.4256052887546421,
+      "n_validacion": 12664,
+      "segundos": 2.7,
+      "seleccionado": false
+    },
+    {
+      "algoritmo": "regresion_lineal",
+      "config_id": "lr_reg_100.0",
+      "parametros": {
+        "regParam": 100.0,
+        "elasticNetParam": 0.0
+      },
+      "mae": 1205.9310900281841,
+      "rmse": 2188.062270602168,
+      "r2": 0.42481123009381205,
+      "n_validacion": 12664,
+      "segundos": 2.4,
+      "seleccionado": false
+    },
+    {
+      "algoritmo": "regresion_lineal",
+      "config_id": "lr_reg_1000.0",
+      "parametros": {
+        "regParam": 1000.0,
+        "elasticNetParam": 0.0
+      },
+      "mae": 1198.0001409789797,
+      "rmse": 2220.95855880314,
+      "r2": 0.4073859370066143,
+      "n_validacion": 12664,
+      "segundos": 2.4,
+      "seleccionado": false
+    },
+    {
+      "algoritmo": "random_forest",
+      "config_id": "rf_t50_d6",
+      "parametros": {
+        "numTrees": 50,
+        "maxDepth": 6
+      },
+      "mae": 1127.54584159349,
+      "rmse": 2108.3841490673876,
+      "r2": 0.4659394137363464,
+      "n_validacion": 12664,
+      "segundos": 6.0,
+      "seleccionado": false
+    },
+    {
+      "algoritmo": "random_forest",
+      "config_id": "rf_t100_d8",
+      "parametros": {
+        "numTrees": 100,
+        "maxDepth": 8
+      },
+      "mae": 1095.3909406561863,
+      "rmse": 2039.6255551550566,
+      "r2": 0.5002049705787366,
+      "n_validacion": 12664,
+      "segundos": 16.0,
+      "seleccionado": false
+    },
+    {
+      "algoritmo": "random_forest",
+      "config_id": "rf_t100_d10",
+      "parametros": {
+        "numTrees": 100,
+        "maxDepth": 10
+      },
+      "mae": 1074.319409895994,
+      "rmse": 1985.5950331862625,
+      "r2": 0.5263337962688368,
+      "n_validacion": 12664,
+      "segundos": 26.0,
+      "seleccionado": true
+    }
+  ]
+}

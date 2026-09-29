@@ -1,0 +1,120 @@
+{
+  "generado_utc": "2026-09-29T07:22:36+00:00",
+  "segundos": 100.9,
+  "spark": "3.5.1",
+  "codigo_sha256": "6b3bc9ae34ed775b161529069f4124358a4d7e697ec336aa04d9a08c748d3d9b",
+  "entradas": {
+    "eligible_2025": {
+      "archivos": 1,
+      "bytes": 1127750,
+      "sha256": "9fe539a9eb4036ba0f138de345094c358ad8f51977e417ee52fb7166612cfb77"
+    },
+    "eligible_2026": {
+      "archivos": 1,
+      "bytes": 307091,
+      "sha256": "88448aa5af6b8e59678a2dd08b9cfe83d59f7b7b3dc9e629e9056590ecfc11ab"
+    }
+  },
+  "n_entrenamiento": 53025,
+  "n_prueba": 13258,
+  "media_entrenamiento_2025": 3421.6842055634133,
+  "metricas": {
+    "baseline_media": {
+      "mae": 1718.0860053858662,
+      "rmse": 2871.4206773113215,
+      "r2": -0.0025252171182392757,
+      "error_medio": 144.11146497511615,
+      "porcentaje_subestimados": 47.14889123548046,
+      "n": 13258
+    },
+    "regresion_lineal": {
+      "mae": 1240.7105465716659,
+      "rmse": 2163.7517029745677,
+      "r2": 0.43073235090270867,
+      "error_medio": 120.55102217276018,
+      "porcentaje_subestimados": 48.94403379091869,
+      "n": 13258
+    },
+    "random_forest": {
+      "mae": 1103.677876119981,
+      "rmse": 1961.019680035603,
+      "r2": 0.5324096251507036,
+      "error_medio": 108.17397464215203,
+      "porcentaje_subestimados": 47.65424649268366,
+      "n": 13258
+    }
+  },
+  "detalles_modelos": {
+    "regresion_lineal": {
+      "intercepto": 3421.6842055634083,
+      "coeficientes_espacio_estandarizado": {
+        "edad": 271.49379340750585,
+        "antiguedad": 187.6971839400755,
+        "horas_semanales": 288.3067795225797,
+        "nivel_educativo=Ninguno": -329.74717874669767,
+        "nivel_educativo=Preprimaria": -89.9223700974263,
+        "nivel_educativo=Primaria": -349.11977649893373,
+        "nivel_educativo=Básico": -200.8434012517014,
+        "nivel_educativo=Diversificado": 33.603219559778495,
+        "nivel_educativo=Superior": 603.3750927932668,
+        "nivel_educativo=Maestría": 833.6680945045538,
+        "nivel_educativo=Doctorado": 311.983465402998,
+        "nivel_educativo=categoria_no_vista": 0.0,
+        "categoria_ocupacional=Empleado de gobierno": 466.03791762189604,
+        "categoria_ocupacional=Empleado de empresa privada": 124.08520282841617,
+        "categoria_ocupacional=Jornalero o peón": -268.48843125143105,
+        "categoria_ocupacional=Servicio doméstico": -373.26688733618056,
+        "categoria_ocupacional=categoria_no_vista": 0.0,
+        "dominio=Urbano Metropolitano": 176.0654089552757,
+        "dominio=Resto Urbano": -104.96899946281253,
+        "dominio=Rural Nacional": -88.97165607238058,
+        "dominio=categoria_no_vista": 0.0
+      },
+      "n_coeficientes": 21,
+      "iteraciones": 13
+    },
+    "random_forest": {
+      "importancias": {
+        "nivel_educativo=Maestría": 0.1990499046548088,
+        "nivel_educativo=Superior": 0.158142180151276,
+        "categoria_ocupacional=Empleado de gobierno": 0.09886001323294825,
+        "edad": 0.09455446643142394,
+        "horas_semanales": 0.09382232576298709,
+        "antiguedad": 0.07075589335679501,
+        "categoria_ocupacional=Jornalero o peón": 0.06767811060151725,
+        "categoria_ocupacional=Empleado de empresa privada": 0.06227831011094744,
+        "categoria_ocupacional=Servicio doméstico": 0.03112532916744981,
+        "dominio=Urbano Metropolitano": 0.028661481246283333,
+        "nivel_educativo=Doctorado": 0.028304009483573554,
+        "nivel_educativo=Diversificado": 0.02378674492732191,
+        "nivel_educativo=Primaria": 0.022892881763775966,
+        "dominio=Resto Urbano": 0.007443808956928815,
+        "nivel_educativo=Ninguno": 0.005331519660825385,
+        "nivel_educativo=Básico": 0.003928132396487208,
+        "dominio=Rural Nacional": 0.003286636099073517,
+        "nivel_educativo=Preprimaria": 9.825199557674454e-05,
+        "nivel_educativo=categoria_no_vista": 0.0,
+        "categoria_ocupacional=categoria_no_vista": 0.0,
+        "dominio=categoria_no_vista": 0.0
+      },
+      "n_arboles": 100,
+      "nodos_totales": 85262
+    }
+  },
+  "salidas": {
+    "predicciones": "data_processed/predictions_test_2026T1.parquet",
+    "modelo_regresion_lineal": "models/final_linear_regression",
+    "modelo_random_forest": "models/final_random_forest",
+    "figuras": {
+      "real_vs_predicho": "outputs/test_2026/figures/real_vs_predicho_2026T1.png",
+      "residuo_vs_predicho": "outputs/test_2026/figures/residuo_vs_predicho_2026T1.png",
+      "errores_por_grupo": "outputs/test_2026/figures/errores_por_grupo_2026T1.png"
+    }
+  },
+  "verificacion": {
+    "ok": true,
+    "controles_aprobados": 10,
+    "fallas": [],
+    "advertencias": []
+  }
+}

@@ -1,0 +1,303 @@
+{
+  "nivel_educativo": [
+    {
+      "grupo": "0",
+      "etiqueta": "Ninguno",
+      "n": 1016,
+      "salario_real_medio": 1884.1358267716535,
+      "baseline_media": {
+        "mae": 1700.6486700301293,
+        "error_medio": -1537.5483787917797,
+        "rmse": 1914.6536514407687,
+        "prediccion_media": 3421.6842055633806,
+        "porcentaje_subestimados": 11.515748031496063
+      },
+      "regresion_lineal": {
+        "mae": 823.5131164082701,
+        "error_medio": 109.34029889060916,
+        "rmse": 1062.9632641342778,
+        "prediccion_media": 1774.7955278810439,
+        "porcentaje_subestimados": 53.64173228346457
+      },
+      "random_forest": {
+        "mae": 653.4723933212329,
+        "error_medio": -48.56955402468991,
+        "rmse": 886.9803113528044,
+        "prediccion_media": 1932.7053807963443,
+        "porcentaje_subestimados": 42.51968503937008
+      }
+    },
+    {
+      "grupo": "1",
+      "etiqueta": "Preprimaria",
+      "n": 80,
+      "salario_real_medio": 2374.5625,
+      "baseline_media": {
+        "mae": 1268.6138130598779,
+        "error_medio": -1047.1217055634133,
+        "rmse": 1569.4591783018066,
+        "prediccion_media": 3421.684205563416,
+        "porcentaje_subestimados": 22.5
+      },
+      "regresion_lineal": {
+        "mae": 735.206347469046,
+        "error_medio": 88.76187301929349,
+        "rmse": 959.8318925408524,
+        "prediccion_media": 2285.8006269807056,
+        "porcentaje_subestimados": 55.00000000000001
+      },
+      "random_forest": {
+        "mae": 622.2295019676583,
+        "error_medio": -125.42497470757341,
+        "rmse": 810.3895597496536,
+        "prediccion_media": 2499.9874747075737,
+        "porcentaje_subestimados": 35.0
+      }
+    },
+    {
+      "grupo": "2",
+      "etiqueta": "Primaria",
+      "n": 3957,
+      "salario_real_medio": 2422.7470305787215,
+      "baseline_media": {
+        "mae": 1381.700168918677,
+        "error_medio": -998.937174984651,
+        "rmse": 1682.1922077489942,
+        "prediccion_media": 3421.684205563622,
+        "porcentaje_subestimados": 23.174121809451606
+      },
+      "regresion_lineal": {
+        "mae": 870.0358173744419,
+        "error_medio": 54.555359033790786,
+        "rmse": 1174.365082560685,
+        "prediccion_media": 2368.1916715449324,
+        "porcentaje_subestimados": 50.54334091483447
+      },
+      "random_forest": {
+        "mae": 756.3162926533064,
+        "error_medio": 41.412883068573365,
+        "rmse": 1069.1577647815636,
+        "prediccion_media": 2381.3341475101483,
+        "porcentaje_subestimados": 48.85013899418752
+      }
+    },
+    {
+      "grupo": "3",
+      "etiqueta": "Básico",
+      "n": 2164,
+      "salario_real_medio": 2905.4551756007395,
+      "baseline_media": {
+        "mae": 1229.7238776306967,
+        "error_medio": -516.2290299626616,
+        "rmse": 1573.9943541304804,
+        "prediccion_media": 3421.6842055635257,
+        "porcentaje_subestimados": 38.40110905730129
+      },
+      "regresion_lineal": {
+        "mae": 894.4514830552858,
+        "error_medio": 127.76970455271245,
+        "rmse": 1213.3771888474034,
+        "prediccion_media": 2777.6854710480256,
+        "porcentaje_subestimados": 53.09611829944547
+      },
+      "random_forest": {
+        "mae": 822.8129688081644,
+        "error_medio": 125.23185682906815,
+        "rmse": 1165.3719123038318,
+        "prediccion_media": 2780.223318771672,
+        "porcentaje_subestimados": 53.927911275415894
+      }
+    },
+    {
+      "grupo": "4",
+      "etiqueta": "Diversificado",
+      "n": 4117,
+      "salario_real_medio": 3924.2390089871265,
+      "baseline_media": {
+        "mae": 1366.0897705572486,
+        "error_medio": 502.55480342367946,
+        "rmse": 2069.5648083725146,
+        "prediccion_media": 3421.6842055636266,
+        "porcentaje_subestimados": 65.75176099101287
+      },
+      "regresion_lineal": {
+        "mae": 1109.3142466276402,
+        "error_medio": 103.9773207128091,
+        "rmse": 1732.8436666418265,
+        "prediccion_media": 3820.261688274316,
+        "porcentaje_subestimados": 48.48190429924703
+      },
+      "random_forest": {
+        "mae": 1019.3978671165308,
+        "error_medio": 134.44377625336918,
+        "rmse": 1641.4444243806008,
+        "prediccion_media": 3789.7952327337484,
+        "porcentaje_subestimados": 47.46174398834103
+      }
+    },
+    {
+      "grupo": "5",
+      "etiqueta": "Superior",
+      "n": 1729,
+      "salario_real_medio": 6264.3597455176405,
+      "baseline_media": {
+        "mae": 3200.949807169403,
+        "error_medio": 2842.675539954225,
+        "rmse": 4996.837180342451,
+        "prediccion_media": 3421.6842055634716,
+        "porcentaje_subestimados": 85.36726431463273
+      },
+      "regresion_lineal": {
+        "mae": 2566.370457210577,
+        "error_medio": 295.51403868184264,
+        "rmse": 3896.2996615783645,
+        "prediccion_media": 5968.845706835797,
+        "porcentaje_subestimados": 39.21341816078658
+      },
+      "random_forest": {
+        "mae": 2290.8093131899386,
+        "error_medio": 283.59734266919395,
+        "rmse": 3562.6032499157395,
+        "prediccion_media": 5980.7624028484415,
+        "porcentaje_subestimados": 41.93175245806825
+      }
+    },
+    {
+      "grupo": "6",
+      "etiqueta": "Maestría",
+      "n": 183,
+      "salario_real_medio": 11290.639344262296,
+      "baseline_media": {
+        "mae": 7944.3120550930835,
+        "error_medio": 7868.955138698865,
+        "rmse": 10845.60729960485,
+        "prediccion_media": 3421.684205563401,
+        "porcentaje_subestimados": 95.08196721311475
+      },
+      "regresion_lineal": {
+        "mae": 5552.879063507152,
+        "error_medio": -131.5042774587016,
+        "rmse": 7448.356673218991,
+        "prediccion_media": 11422.143621721001,
+        "porcentaje_subestimados": 38.79781420765027
+      },
+      "random_forest": {
+        "mae": 4659.499093626752,
+        "error_medio": -320.30384488476466,
+        "rmse": 6473.9669999788575,
+        "prediccion_media": 11610.943189147058,
+        "porcentaje_subestimados": 38.25136612021858
+      }
+    },
+    {
+      "grupo": "7",
+      "etiqueta": "Doctorado",
+      "n": 12,
+      "salario_real_medio": 20291.666666666668,
+      "baseline_media": {
+        "mae": 17340.263162030486,
+        "error_medio": 16869.98246110325,
+        "rmse": 23279.291343598794,
+        "prediccion_media": 3421.684205563412,
+        "porcentaje_subestimados": 91.66666666666666
+      },
+      "regresion_lineal": {
+        "mae": 12919.309265966616,
+        "error_medio": 6062.703551890026,
+        "rmse": 16940.253159984026,
+        "prediccion_media": 14228.963114776641,
+        "porcentaje_subestimados": 50.0
+      },
+      "random_forest": {
+        "mae": 11265.456644919394,
+        "error_medio": 6120.7896245537595,
+        "rmse": 12792.178880953254,
+        "prediccion_media": 14170.877042112908,
+        "porcentaje_subestimados": 75.0
+      }
+    }
+  ],
+  "dominio": [
+    {
+      "grupo": "1",
+      "etiqueta": "Urbano Metropolitano",
+      "n": 5632,
+      "salario_real_medio": 4352.307883522727,
+      "baseline_media": {
+        "mae": 1858.8905331157584,
+        "error_medio": 930.623677959295,
+        "rmse": 3533.660088700261,
+        "prediccion_media": 3421.684205563416,
+        "porcentaje_subestimados": 65.78480113636364
+      },
+      "regresion_lineal": {
+        "mae": 1446.092557932071,
+        "error_medio": 136.03609072146637,
+        "rmse": 2714.6107092246216,
+        "prediccion_media": 4216.2717928012635,
+        "porcentaje_subestimados": 46.377840909090914
+      },
+      "random_forest": {
+        "mae": 1317.3105914529776,
+        "error_medio": 172.04922508859065,
+        "rmse": 2478.8978089292345,
+        "prediccion_media": 4180.258658434135,
+        "porcentaje_subestimados": 48.17116477272727
+      }
+    },
+    {
+      "grupo": "2",
+      "etiqueta": "Resto Urbano",
+      "n": 4846,
+      "salario_real_medio": 3281.6392901361946,
+      "baseline_media": {
+        "mae": 1647.98008025792,
+        "error_medio": -140.0449154272026,
+        "rmse": 2443.2415248183866,
+        "prediccion_media": 3421.6842055636434,
+        "porcentaje_subestimados": 40.115559224102356
+      },
+      "regresion_lineal": {
+        "mae": 1189.6473203741484,
+        "error_medio": 134.282906317394,
+        "rmse": 1831.5666513463011,
+        "prediccion_media": 3147.3563838188,
+        "porcentaje_subestimados": 51.1143210895584
+      },
+      "random_forest": {
+        "mae": 1044.3872558175278,
+        "error_medio": 90.41876386624459,
+        "rmse": 1648.7328391651774,
+        "prediccion_media": 3191.2205262699486,
+        "porcentaje_subestimados": 47.70945109368551
+      }
+    },
+    {
+      "grupo": "3",
+      "etiqueta": "Rural Nacional",
+      "n": 2780,
+      "salario_real_medio": 2467.73273381295,
+      "baseline_media": {
+        "mae": 1555.0364417150636,
+        "error_medio": -953.9514717504653,
+        "rmse": 1902.262166520361,
+        "prediccion_media": 3421.684205563573,
+        "porcentaje_subestimados": 21.654676258992804
+      },
+      "regresion_lineal": {
+        "mae": 913.6389300865301,
+        "error_medio": 65.24288669390953,
+        "rmse": 1245.450094074587,
+        "prediccion_media": 2402.4898471190327,
+        "porcentaje_subestimados": 50.35971223021583
+      },
+      "random_forest": {
+        "mae": 774.2328736848042,
+        "error_medio": 9.719421011109556,
+        "rmse": 1073.5022863854367,
+        "prediccion_media": 2458.0133128018388,
+        "porcentaje_subestimados": 46.510791366906474
+      }
+    }
+  ]
+}

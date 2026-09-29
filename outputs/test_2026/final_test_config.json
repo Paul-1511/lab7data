@@ -1,0 +1,65 @@
+{
+  "origen": "outputs/models/models_validation_summary.json",
+  "origen_sha256": "81dc45d9feba9c0837251877991cf60fef3ed1b38156b70644606f2f7b994ad0",
+  "origen_generado_utc": "2026-09-29T06:55:07+00:00",
+  "regresion_lineal": {
+    "config_id": "lr_reg_0.0",
+    "regParam": 0.0,
+    "elasticNetParam": 0.0
+  },
+  "random_forest": {
+    "config_id": "rf_t100_d10",
+    "numTrees": 100,
+    "maxDepth": 10
+  },
+  "metricas_2025T4": {
+    "baseline_media": {
+      "mae": 1672.5026056435038,
+      "rmse": 2889.5714322659232,
+      "r2": -0.003131603852470688
+    },
+    "regresion_lineal": {
+      "mae": 1210.1374804326135,
+      "rmse": 2186.4195786682294,
+      "r2": 0.42567455403897536
+    },
+    "random_forest": {
+      "mae": 1074.319409895994,
+      "rmse": 1985.5950331862625,
+      "r2": 0.5263337962688368
+    }
+  },
+  "lider_provisional_2025T4": {
+    "algoritmo": "random_forest",
+    "config_id": "rf_t100_d10",
+    "rmse": 1985.5950331862625
+  },
+  "entrenamiento_final": {
+    "periodos": [
+      "2025T1",
+      "2025T2",
+      "2025T3",
+      "2025T4"
+    ],
+    "n": 53025
+  },
+  "prueba": {
+    "periodo": "2026T1",
+    "n": 13258
+  },
+  "predictores_numericos": [
+    "edad",
+    "antiguedad",
+    "horas_semanales"
+  ],
+  "predictores_categoricos": [
+    "nivel_educativo",
+    "categoria_ocupacional",
+    "dominio"
+  ],
+  "objetivo": "salario_mensual",
+  "seleccion_con_2026": false,
+  "evaluaciones_por_algoritmo": 1,
+  "residuo": "salario_real - salario_predicho; positivo = subestimacion",
+  "recorte_objetivo_o_predicciones": false
+}

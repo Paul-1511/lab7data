@@ -40,6 +40,10 @@ MODELS_VALIDATION_OUT = OUTPUT_DIR / "models"
 VALIDATION_PREDICTIONS = PROCESSED_DIR / "predictions_validation_2025T4.parquet"
 LR_VALIDATION_MODEL = MODELS_DIR / "validation_linear_regression"
 RF_VALIDATION_MODEL = MODELS_DIR / "validation_random_forest"
+FINAL_OUT = OUTPUT_DIR / "test_2026"
+FINAL_PREDICTIONS = PROCESSED_DIR / "predictions_test_2026T1.parquet"
+LR_FINAL_MODEL = MODELS_DIR / "final_linear_regression"
+RF_FINAL_MODEL = MODELS_DIR / "final_random_forest"
 
 REQUIRED_COLUMNS: tuple[str, ...] = (
     "ANIO",
@@ -166,6 +170,15 @@ RF_MAX_BINS = 32
 RF_CONFIGS: list[dict[str, Any]] = [
     {"config_id": f"rf_t{trees}_d{depth}", "numTrees": trees, "maxDepth": depth} for trees, depth in ((50, 6), (100, 8), (100, 10))
 ]
+FINAL_TRAIN_ROWS = CONTROL_TOTALS["reentrenamiento_2025"][1]
+TEST_PERIOD = CONTROL_TOTALS["prueba_2026T1"][0][0]
+TEST_ROWS = CONTROL_TOTALS["prueba_2026T1"][1]
+FINAL_MODELS = {
+    "baseline_media": "pred_baseline",
+    "regresion_lineal": "pred_regresion_lineal",
+    "random_forest": "pred_random_forest",
+}
+BAND_PERCENTILES = {"P25": 0.25, "P50": 0.5, "P75": 0.75, "P90": 0.9, "P95": 0.95}
 RAW_TOTAL_CONTROLS = {"2025": 203_676, "2026": 49_843, "total": 253_519}
 SENTINELS = {"", "nan", "none", "null", "na", "n/a", "#n/a", ".", "-", "inf", "+inf", "-inf", "infinity", "-infinity"}
 INTEGRAL_TEXT = re.compile(r"^([+-]?\d+)\.0+$")
@@ -2308,6 +2321,504 @@ def run_validate_models_validation() -> int:
     return 0 if checks.ok else 1
 
 
+def frozen_configurations(checks: CheckLog) -> dict[str, Any]:
+    summary_path = MODELS_VALIDATION_OUT / "models_validation_summary.json"
+    validation_path = MODELS_VALIDATION_OUT / "validation_models_validation.json"
+    ready = summary_path.exists() and validation_path.exists() and read_json(validation_path).get("ok") is True
+    checks.require(ready, "la seleccion temporal no esta validada: ejecute --validate-models-validation")
+    if not ready:
+        return {}
+    summary = read_json(summary_path)
+    selection = summary["seleccion"]
+    return {
+        "origen": relative(summary_path),
+        "origen_sha256": sha256_file(summary_path),
+        "origen_generado_utc": summary["generado_utc"],
+        "regresion_lineal": {"config_id": selection["regresion_lineal"]["config_id"], **selection["regresion_lineal"]["parametros"]},
+        "random_forest": {"config_id": selection["random_forest"]["config_id"], **selection["random_forest"]["parametros"]},
+        "metricas_2025T4": {
+            name: {metric: selection[name][metric] for metric in ("mae", "rmse", "r2")} for name in FINAL_MODELS
+        },
+        "lider_provisional_2025T4": summary["lider_provisional_2025T4"],
+    }
+
+
+def final_partitions(spark, checks: CheckLog):
+    from pyspark.sql import functions as F
+
+    columns = ["id_registro", "periodo_archivo", "fila_origen", TARGET, *NUMERIC_PREDICTORS, *CATEGORICAL_PREDICTORS]
+    train = spark.read.parquet(str(ELIGIBLE_2025)).select(*columns, "anio_archivo")
+    test = spark.read.parquet(str(ELIGIBLE_2026)).select(*columns, "anio_archivo")
+    checks.require(train.filter(F.col("anio_archivo") != 2025).count() == 0, "entrenamiento final con filas ajenas a 2025")
+    checks.require(test.filter(F.col("periodo_archivo") != TEST_PERIOD).count() == 0, f"prueba con filas ajenas a {TEST_PERIOD}")
+    train = train.drop("anio_archivo")
+    test = test.drop("anio_archivo")
+    train_n = train.count()
+    test_n = test.count()
+    checks.require(train_n == FINAL_TRAIN_ROWS, f"entrenamiento final {train_n} != {FINAL_TRAIN_ROWS}")
+    checks.require(test_n == TEST_ROWS, f"prueba {test_n} != {TEST_ROWS}")
+    checks.require(train.select("id_registro").distinct().count() == train_n, "entrenamiento final: id_registro duplicado")
+    checks.require(test.select("id_registro").distinct().count() == test_n, "prueba: id_registro duplicado")
+    overlap = train.select("id_registro").intersect(test.select("id_registro")).count()
+    checks.require(overlap == 0, f"{overlap} id_registro compartidos entre 2025 y 2026")
+    return train, test
+
+
+def residual_column(name: str) -> str:
+    return f"residuo_{FINAL_MODELS[name].removeprefix('pred_')}"
+
+
+def final_metrics(frame) -> dict[str, dict[str, float]]:
+    from pyspark.sql import functions as F
+
+    results = {}
+    for name, column in FINAL_MODELS.items():
+        metrics = regression_metrics(frame, column)
+        row = frame.agg(
+            F.avg(residual_column(name)).alias("error_medio"),
+            F.sum(F.when(F.col(residual_column(name)) > 0, 1).otherwise(0)).alias("subestimados"),
+            F.count(F.lit(1)).alias("n"),
+        ).first()
+        metrics.update(
+            {
+                "error_medio": float(row["error_medio"]),
+                "porcentaje_subestimados": 100.0 * int(row["subestimados"]) / int(row["n"]),
+                "n": int(row["n"]),
+            }
+        )
+        results[name] = metrics
+    return results
+
+
+def error_aggregations(name: str) -> list[Any]:
+    from pyspark.sql import functions as F
+
+    residual = F.col(residual_column(name))
+    prediction = F.col(FINAL_MODELS[name])
+    return [
+        F.avg(F.abs(residual)).alias(f"{name}__mae"),
+        F.avg(residual).alias(f"{name}__error_medio"),
+        F.sqrt(F.avg(residual * residual)).alias(f"{name}__rmse"),
+        F.avg(prediction).alias(f"{name}__prediccion_media"),
+        (100.0 * F.avg(F.when(residual > 0, 1.0).otherwise(0.0))).alias(f"{name}__porcentaje_subestimados"),
+    ]
+
+
+def error_table(frame, group_column: str, order: list[str] | None = None) -> list[dict[str, Any]]:
+    from pyspark.sql import functions as F
+
+    aggregations = [F.count(F.lit(1)).alias("n"), F.avg(TARGET).alias("salario_real_medio")]
+    aggregations += [expression for name in FINAL_MODELS for expression in error_aggregations(name)]
+    rows = frame.groupBy(group_column).agg(*aggregations).collect()
+    table = []
+    for row in rows:
+        code = str(row[group_column])
+        item = {
+            "grupo": code,
+            "etiqueta": category_label(group_column, code) if group_column in CATEGORY_LABELS else code,
+            "n": int(row["n"]),
+            "salario_real_medio": float(row["salario_real_medio"]),
+        }
+        for name in FINAL_MODELS:
+            item[name] = {
+                metric: float(row[f"{name}__{metric}"])
+                for metric in ("mae", "error_medio", "rmse", "prediccion_media", "porcentaje_subestimados")
+            }
+        table.append(item)
+    if order is not None:
+        return sorted(table, key=lambda item: order.index(item["grupo"]))
+    return sorted(table, key=lambda item: int(item["grupo"]) if item["grupo"].isdigit() else 99)
+
+
+def salary_thresholds(frame) -> dict[str, float]:
+    from pyspark.sql import functions as F
+
+    levels = ", ".join(str(level) for level in BAND_PERCENTILES.values())
+    values = frame.agg(F.expr(f"percentile({TARGET}, array({levels}))").alias("p")).first()["p"]
+    return {name: float(value) for name, value in zip(BAND_PERCENTILES, values)}
+
+
+def band_labels(thresholds: dict[str, float]) -> list[str]:
+    names = list(thresholds)
+    return [f"<{names[0]}", *[f"{low}-{high}" for low, high in zip(names, names[1:])], f">={names[-1]}"]
+
+
+def with_salary_band(frame, thresholds: dict[str, float]):
+    from pyspark.sql import functions as F
+
+    labels = band_labels(thresholds)
+    values = list(thresholds.values())
+    expression = F.when(F.col(TARGET) < values[0], labels[0])
+    for index, value in enumerate(values[1:], start=1):
+        expression = expression.when(F.col(TARGET) < value, labels[index])
+    return frame.withColumn("banda_salarial", expression.otherwise(labels[-1]))
+
+
+def high_salary_analysis(frame, thresholds: dict[str, float], bands: list[dict[str, Any]]) -> dict[str, Any]:
+    from pyspark.sql import functions as F
+
+    top_label = band_labels(thresholds)[-1]
+    top = next(item for item in bands if item["grupo"] == top_label)
+    rest = frame.filter(F.col("banda_salarial") != top_label)
+    rest_row = rest.agg(*[F.avg(residual_column(name)).alias(name) for name in FINAL_MODELS]).first()
+    analysis: dict[str, Any] = {
+        "umbral_p95": thresholds["P95"],
+        "n_banda_alta": top["n"],
+        "criterio_subestimacion_sistematica": "error medio > 0 y mas del 50% de residuos positivos en la banda >= P95",
+        "modelos": {},
+    }
+    for name in FINAL_MODELS:
+        correlation = frame.stat.corr(TARGET, residual_column(name))
+        ratio = top[name]["prediccion_media"] / top["salario_real_medio"]
+        analysis["modelos"][name] = {
+            "error_medio_banda_alta": top[name]["error_medio"],
+            "porcentaje_subestimados_banda_alta": top[name]["porcentaje_subestimados"],
+            "mae_banda_alta": top[name]["mae"],
+            "prediccion_media_sobre_real_medio": ratio,
+            "error_medio_resto": float(rest_row[name]),
+            "correlacion_salario_residuo": float(correlation),
+            "subestimacion_sistematica": top[name]["error_medio"] > 0 and top[name]["porcentaje_subestimados"] > 50.0,
+        }
+    return analysis
+
+
+def model_title(name: str) -> str:
+    return {"baseline_media": "Baseline (media 2025)", "regresion_lineal": "Regresión lineal", "random_forest": "Random Forest"}[name]
+
+
+def final_conclusions(metrics: dict[str, Any], frozen: dict[str, Any], analysis: dict[str, Any], by_education: list[dict[str, Any]], by_domain: list[dict[str, Any]]) -> dict[str, Any]:
+    models = ("regresion_lineal", "random_forest")
+    best = min(models, key=lambda name: metrics[name]["rmse"])
+    baseline_rmse = metrics["baseline_media"]["rmse"]
+    statements = [
+        f"Las configuraciones {frozen['regresion_lineal']['config_id']} y {frozen['random_forest']['config_id']} se congelaron con 2025T4 y se evaluaron una sola vez en {TEST_ROWS:,} registros de {TEST_PERIOD}.",
+    ]
+    for name in models:
+        values = metrics[name]
+        t4 = frozen["metricas_2025T4"][name]
+        improvement = 100.0 * (baseline_rmse - values["rmse"]) / baseline_rmse
+        statements.append(
+            f"{model_title(name)}: MAE Q{values['mae']:,.2f}, RMSE Q{values['rmse']:,.2f}, R² {values['r2']:.4f} y error medio Q{values['error_medio']:,.2f}; "
+            f"RMSE {improvement:.1f}% menor que el baseline (Q{baseline_rmse:,.2f}) y {values['rmse'] - t4['rmse']:+,.2f} Q respecto de 2025T4."
+        )
+    statements.append(
+        f"En 2026T1 el menor RMSE corresponde a {model_title(best)}; el lider provisional de 2025T4 fue {frozen['lider_provisional_2025T4']['algoritmo']}. "
+        "Este resultado se reporta y no modifica ninguna decision."
+    )
+    for name in models:
+        item = analysis["modelos"][name]
+        worst_education = max(by_education, key=lambda row: row[name]["mae"])
+        worst_domain = max(by_domain, key=lambda row: row[name]["mae"])
+        pattern = "subestima sistematicamente" if item["subestimacion_sistematica"] else "no muestra subestimacion sistematica de"
+        statements.append(
+            f"{model_title(name)} {pattern} los salarios >= P95 (Q{analysis['umbral_p95']:,.0f}; n={analysis['n_banda_alta']:,}): "
+            f"error medio Q{item['error_medio_banda_alta']:,.2f}, {item['porcentaje_subestimados_banda_alta']:.1f}% de residuos positivos "
+            f"y prediccion media igual a {100 * item['prediccion_media_sobre_real_medio']:.1f}% del salario real medio; en el resto el error medio es Q{item['error_medio_resto']:,.2f}. "
+            f"Mayor MAE por educacion: {worst_education['etiqueta']} (Q{worst_education[name]['mae']:,.2f}); por dominio: {worst_domain['etiqueta']} (Q{worst_domain[name]['mae']:,.2f})."
+        )
+    statements.append(
+        "Los patrones describen asociaciones en los registros elegibles no ponderados; no establecen causalidad ni representan a toda Guatemala."
+    )
+    return {"mejor_rmse_2026": best, "enunciados": statements}
+
+
+def figure_real_vs_predicted(sample, path: Path) -> str:
+    import matplotlib.pyplot as plt
+
+    figure, axes = plt.subplots(1, 2, figsize=(13, 5.5))
+    for axis, name in zip(axes, ("regresion_lineal", "random_forest")):
+        predicted = sample[FINAL_MODELS[name]]
+        axis.scatter(sample[TARGET], predicted, s=6, alpha=0.35)
+        low = min(sample[TARGET].min(), predicted.min())
+        high = max(sample[TARGET].max(), predicted.max())
+        axis.plot([low, high], [low, high], color="#C44E52", linestyle="--", label="y = x")
+        axis.set_title(model_title(name))
+        axis.set_xlabel("Salario real (Q)")
+        axis.set_ylabel("Salario predicho (Q)")
+        axis.legend()
+    figure.suptitle(f"{TEST_PERIOD}: real frente a predicho, muestra compartida de {len(sample):,} registros")
+    return save_figure(figure, path)
+
+
+def figure_residuals(sample, path: Path) -> str:
+    import matplotlib.pyplot as plt
+
+    figure, axes = plt.subplots(1, 2, figsize=(13, 5.5))
+    for axis, name in zip(axes, ("regresion_lineal", "random_forest")):
+        axis.scatter(sample[FINAL_MODELS[name]], sample[residual_column(name)], s=6, alpha=0.35)
+        axis.axhline(0, color="#C44E52", linestyle="--")
+        axis.set_title(model_title(name))
+        axis.set_xlabel("Salario predicho (Q)")
+        axis.set_ylabel("Residuo = real - predicho (Q)")
+    figure.suptitle(f"{TEST_PERIOD}: residuo frente a predicho (positivo = subestimacion)")
+    return save_figure(figure, path)
+
+
+def figure_group_errors(tables: dict[str, list[dict[str, Any]]], path: Path) -> str:
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    figure, axes = plt.subplots(3, 2, figsize=(14, 13))
+    for row_axes, (title, table) in zip(axes, tables.items()):
+        labels = [f"{item['etiqueta']}\n(n={item['n']:,})" for item in table]
+        positions = np.arange(len(table))
+        for offset, name in ((-0.2, "regresion_lineal"), (0.2, "random_forest")):
+            row_axes[0].bar(positions + offset, [item[name]["mae"] for item in table], width=0.4, label=model_title(name))
+            row_axes[1].bar(positions + offset, [item[name]["error_medio"] for item in table], width=0.4, label=model_title(name))
+        for axis, metric in zip(row_axes, ("MAE (Q)", "Error medio real - predicho (Q)")):
+            axis.set_xticks(positions, labels, fontsize=7)
+            axis.set_title(f"{metric} por {title}")
+            axis.legend(fontsize=8)
+        row_axes[1].axhline(0, color="gray", linewidth=0.8)
+    return save_figure(figure, path)
+
+
+def run_final_test(force: bool) -> int:
+    from pyspark.sql import functions as F
+
+    started = time.perf_counter()
+    checks = CheckLog()
+    summary_path = FINAL_OUT / "final_test_summary.json"
+    if summary_path.exists() and not force:
+        print(f"PRUEBA_FINAL=YA_EVALUADA {relative(summary_path)} existe; la prueba 2026 se evalua una sola vez. Ejecute --validate-final-test.")
+        return 0
+    frozen = frozen_configurations(checks)
+    foundation_ok = (FOUNDATION_OUT / "validation_foundation.json").exists() and read_json(FOUNDATION_OUT / "validation_foundation.json").get("ok") is True
+    checks.require(foundation_ok and parquet_complete(ELIGIBLE_2025) and parquet_complete(ELIGIBLE_2026), "fundacion no validada")
+    if not checks.ok:
+        print("PRUEBA_FINAL=FALLA prerequisitos ausentes")
+        return 1
+    FINAL_OUT.mkdir(parents=True, exist_ok=True)
+    spark = build_spark("lab7-final-test")
+    spark.sparkContext.setLogLevel("WARN")
+    train = test = predictions = None
+    try:
+        train, test = final_partitions(spark, checks)
+        train = train.cache()
+        test = test.cache()
+        if not checks.ok:
+            print("PRUEBA_FINAL=FALLA particiones finales invalidas")
+            return 1
+        train_mean = float(train.agg(F.avg(TARGET)).first()[0])
+        print(f"Reentrenando configuraciones congeladas con {FINAL_TRAIN_ROWS:,} registros de 2025")
+        lr_model = linear_pipeline(frozen["regresion_lineal"]).fit(train)
+        rf_model = forest_pipeline(frozen["random_forest"]).fit(train)
+        lr_model.write().overwrite().save(str(LR_FINAL_MODEL))
+        rf_model.write().overwrite().save(str(RF_FINAL_MODEL))
+        print(f"Evaluacion unica en {TEST_PERIOD} ({TEST_ROWS:,} registros)")
+        scored = (
+            test.withColumn("pred_baseline", F.lit(train_mean))
+            .join(lr_model.transform(test).select("id_registro", F.col("prediccion").alias("pred_regresion_lineal")), "id_registro")
+            .join(rf_model.transform(test).select("id_registro", F.col("prediccion").alias("pred_random_forest")), "id_registro")
+        )
+        for name, column in FINAL_MODELS.items():
+            scored = scored.withColumn(residual_column(name), F.col(TARGET) - F.col(column))
+        thresholds = salary_thresholds(scored)
+        scored = with_salary_band(scored, thresholds)
+        output_columns = [
+            "id_registro", "periodo_archivo", "fila_origen", TARGET, *CATEGORICAL_PREDICTORS, "banda_salarial",
+            *FINAL_MODELS.values(), *[residual_column(name) for name in FINAL_MODELS],
+        ]
+        scored.select(*output_columns).orderBy("fila_origen").coalesce(1).write.mode("overwrite").parquet(str(FINAL_PREDICTIONS))
+        predictions = spark.read.parquet(str(FINAL_PREDICTIONS)).cache()
+        checks.require(predictions.count() == TEST_ROWS, "predicciones finales incompletas")
+        metrics = final_metrics(predictions)
+        by_education = error_table(predictions, "nivel_educativo")
+        by_domain = error_table(predictions, "dominio")
+        bands = error_table(predictions, "banda_salarial", band_labels(thresholds))
+        analysis = high_salary_analysis(predictions, thresholds, bands)
+        conclusions = final_conclusions(metrics, frozen, analysis, by_education, by_domain)
+        sample = collect_pandas(
+            deterministic_sample(predictions),
+            ["id_registro", TARGET, *FINAL_MODELS.values(), *[residual_column(name) for name in FINAL_MODELS]],
+        )
+        figures = {
+            "real_vs_predicho": figure_real_vs_predicted(sample, FINAL_OUT / "figures" / "real_vs_predicho_2026T1.png"),
+            "residuo_vs_predicho": figure_residuals(sample, FINAL_OUT / "figures" / "residuo_vs_predicho_2026T1.png"),
+            "errores_por_grupo": figure_group_errors(
+                {"nivel educativo": by_education, "dominio": by_domain, "banda salarial": bands},
+                FINAL_OUT / "figures" / "errores_por_grupo_2026T1.png",
+            ),
+        }
+        write_json(FINAL_OUT / "final_test_config.json", {
+            **frozen,
+            "entrenamiento_final": {"periodos": [s.periodo for s in SOURCES if s.anio == 2025], "n": FINAL_TRAIN_ROWS},
+            "prueba": {"periodo": TEST_PERIOD, "n": TEST_ROWS},
+            "predictores_numericos": list(NUMERIC_PREDICTORS),
+            "predictores_categoricos": list(CATEGORICAL_PREDICTORS),
+            "objetivo": TARGET,
+            "seleccion_con_2026": False,
+            "evaluaciones_por_algoritmo": 1,
+            "residuo": "salario_real - salario_predicho; positivo = subestimacion",
+            "recorte_objetivo_o_predicciones": False,
+        })
+        write_json(FINAL_OUT / "final_test_metrics.json", {"media_entrenamiento_2025": train_mean, "metricas": metrics})
+        write_json(FINAL_OUT / "errores_por_grupo.json", {"nivel_educativo": by_education, "dominio": by_domain})
+        write_json(FINAL_OUT / "errores_por_banda.json", {"umbrales_percentiles_2026": thresholds, "bandas": bands})
+        write_json(FINAL_OUT / "analisis_salarios_altos.json", analysis)
+        write_json(FINAL_OUT / "conclusiones.json", conclusions)
+        write_json(FINAL_OUT / "muestra_graficos_ids.json", {"metodo": f"xxhash64(id_registro, {SEED}) ascendente, limite {SAMPLE_SIZE}", "ids": sample["id_registro"].tolist()})
+        write_json(summary_path, {
+            "generado_utc": utc_now(),
+            "segundos": round(time.perf_counter() - started, 1),
+            "spark": spark.version,
+            "codigo_sha256": sha256_file(Path(__file__)),
+            "entradas": {
+                "eligible_2025": parquet_fingerprint(ELIGIBLE_2025),
+                "eligible_2026": parquet_fingerprint(ELIGIBLE_2026),
+            },
+            "n_entrenamiento": FINAL_TRAIN_ROWS,
+            "n_prueba": TEST_ROWS,
+            "media_entrenamiento_2025": train_mean,
+            "metricas": metrics,
+            "detalles_modelos": {
+                "regresion_lineal": model_details("regresion_lineal", lr_model, test),
+                "random_forest": model_details("random_forest", rf_model, test),
+            },
+            "salidas": {
+                "predicciones": relative(FINAL_PREDICTIONS),
+                "modelo_regresion_lineal": relative(LR_FINAL_MODEL),
+                "modelo_random_forest": relative(RF_FINAL_MODEL),
+                "figuras": figures,
+            },
+            "verificacion": checks.as_dict(),
+        })
+        for name, values in metrics.items():
+            print(f"  {name}: MAE={values['mae']:,.2f} RMSE={values['rmse']:,.2f} R2={values['r2']:.4f} error_medio={values['error_medio']:,.2f}")
+        for statement in conclusions["enunciados"]:
+            print(f"  - {statement}")
+        status = "OK" if checks.ok else "FALLA"
+        print(f"PRUEBA_FINAL={status} controles={checks.passed} fallas={len(checks.failures)} figuras={len(figures)}")
+        return 0 if checks.ok else 1
+    finally:
+        for frame in (train, test, predictions):
+            if frame is not None:
+                frame.unpersist()
+        spark.catalog.clearCache()
+        spark.stop()
+
+
+def compare_tables(stored: list[dict[str, Any]], recomputed: list[dict[str, Any]], label: str, checks: CheckLog) -> None:
+    checks.require([item["grupo"] for item in stored] == [item["grupo"] for item in recomputed], f"{label}: grupos distintos")
+    checks.require(sum(item["n"] for item in stored) == TEST_ROWS, f"{label}: n no suma {TEST_ROWS}")
+    for old, new in zip(stored, recomputed):
+        checks.require(old["n"] == new["n"], f"{label} {old['grupo']}: n")
+        for name in FINAL_MODELS:
+            for metric in ("mae", "error_medio", "rmse"):
+                checks.require(close_to(old[name][metric], new[name][metric], 1e-6), f"{label} {old['grupo']} {name}: {metric}")
+
+
+def run_validate_final_test() -> int:
+    from pyspark.ml import PipelineModel
+    from pyspark.ml.feature import VectorAssembler
+    from pyspark.sql import functions as F
+
+    checks = CheckLog()
+    names = (
+        "final_test_config.json", "final_test_metrics.json", "errores_por_grupo.json", "errores_por_banda.json",
+        "analisis_salarios_altos.json", "conclusiones.json", "muestra_graficos_ids.json", "final_test_summary.json",
+    )
+    absent = [relative(FINAL_OUT / name) for name in names if not (FINAL_OUT / name).exists()]
+    absent += [relative(FINAL_PREDICTIONS)] if not parquet_complete(FINAL_PREDICTIONS) else []
+    absent += [relative(path) for path in (LR_FINAL_MODEL, RF_FINAL_MODEL) if not (path / "metadata").exists()]
+    if absent:
+        print(f"VALIDACION_PRUEBA_FINAL=FALLA artefactos ausentes: {absent}")
+        return 1
+    config, metrics_file, groups, bands_file, analysis, conclusions, sample_file, summary = (read_json(FINAL_OUT / name) for name in names)
+    print("Configuraciones congeladas:")
+    phase3 = frozen_configurations(checks)
+    for algorithm in ("regresion_lineal", "random_forest"):
+        checks.require(config[algorithm] == phase3.get(algorithm), f"{algorithm}: configuracion distinta de la seleccion 2025T4")
+    checks.require(config["origen_sha256"] == phase3.get("origen_sha256"), "resumen de Fase 3 modificado despues de la prueba")
+    checks.require(config["origen_generado_utc"] < summary["generado_utc"], "la seleccion no precede a la prueba 2026")
+    checks.require(config["seleccion_con_2026"] is False and config["evaluaciones_por_algoritmo"] == 1, "seleccion basada en 2026")
+    checks.require(set(metrics_file["metricas"]) == set(FINAL_MODELS), "modelos evaluados distintos de baseline, LR y RF")
+    checks.require(config["predictores_numericos"] == list(NUMERIC_PREDICTORS) and config["predictores_categoricos"] == list(CATEGORICAL_PREDICTORS), "predictores")
+    checks.require(summary["verificacion"]["ok"], "el resumen registra fallas")
+    checks.require(summary["entradas"]["eligible_2025"]["sha256"] == parquet_fingerprint(ELIGIBLE_2025)["sha256"], "eligible_2025 cambio")
+    checks.require(summary["entradas"]["eligible_2026"]["sha256"] == parquet_fingerprint(ELIGIBLE_2026)["sha256"], "eligible_2026 cambio")
+    checks.require(len(conclusions["enunciados"]) >= 5 and conclusions["mejor_rmse_2026"] in ("regresion_lineal", "random_forest"), "conclusiones")
+    for figure in summary["salidas"]["figuras"].values():
+        file = ROOT / figure
+        checks.require(file.exists() and file.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n", f"figura ausente {figure}")
+    sample_ids = sample_file["ids"]
+    checks.require(0 < len(sample_ids) <= SAMPLE_SIZE and len(set(sample_ids)) == len(sample_ids), "muestra de graficos invalida")
+    spark = build_spark("lab7-validate-final-test")
+    spark.sparkContext.setLogLevel("WARN")
+    try:
+        train, test = final_partitions(spark, checks)
+        train_mean = float(train.agg(F.avg(TARGET)).first()[0])
+        checks.require(close_to(train_mean, metrics_file["media_entrenamiento_2025"], 1e-9), "media 2025 recalculada distinta")
+        predictions = spark.read.parquet(str(FINAL_PREDICTIONS)).cache()
+        total = predictions.count()
+        checks.require(total == TEST_ROWS, f"predicciones {total} != {TEST_ROWS}")
+        checks.require(predictions.select("id_registro").distinct().count() == total, "predicciones: id_registro duplicado")
+        checks.require(predictions.filter(F.col("periodo_archivo") != TEST_PERIOD).count() == 0, f"predicciones fuera de {TEST_PERIOD}")
+        missing = test.select("id_registro").subtract(predictions.select("id_registro")).count()
+        extra = predictions.select("id_registro").subtract(test.select("id_registro")).count()
+        checks.require(missing == 0 and extra == 0, f"cobertura distinta de {TEST_PERIOD}: faltan {missing}, sobran {extra}")
+        target_mismatch = (
+            predictions.join(test.select("id_registro", F.col(TARGET).alias("objetivo_original")), "id_registro")
+            .filter(F.col(TARGET) != F.col("objetivo_original"))
+            .count()
+        )
+        checks.require(target_mismatch == 0, f"{target_mismatch} objetivos alterados")
+        baseline_range = predictions.agg(F.min("pred_baseline"), F.max("pred_baseline")).first()
+        checks.require(close_to(baseline_range[0], train_mean, 1e-9) and close_to(baseline_range[1], train_mean, 1e-9), "baseline distinto de la media 2025")
+        for name, column in FINAL_MODELS.items():
+            wrong = predictions.filter(F.abs(F.col(residual_column(name)) - (F.col(TARGET) - F.col(column))) > 1e-6).count()
+            checks.require(wrong == 0, f"{name}: residuo distinto de real - predicho")
+        recomputed = final_metrics(predictions)
+        for name, values in recomputed.items():
+            for metric, value in values.items():
+                checks.require(close_to(value, metrics_file["metricas"][name][metric], 1e-6), f"{name}: {metric} recalculado")
+            print(f"  {name}: MAE={values['mae']:,.2f} RMSE={values['rmse']:,.2f} R2={values['r2']:.4f} error_medio={values['error_medio']:,.2f}")
+        thresholds = salary_thresholds(predictions)
+        for key, value in thresholds.items():
+            checks.require(close_to(value, bands_file["umbrales_percentiles_2026"][key], 1e-9), f"umbral {key}")
+        rebanded = with_salary_band(predictions.drop("banda_salarial"), thresholds)
+        checks.require(
+            rebanded.join(predictions.select("id_registro", F.col("banda_salarial").alias("b")), "id_registro").filter(F.col("banda_salarial") != F.col("b")).count() == 0,
+            "bandas salariales no reproducibles",
+        )
+        checks.require(band_labels(thresholds)[-1] == ">=P95", "banda >= P95 ausente")
+        compare_tables(groups["nivel_educativo"], error_table(predictions, "nivel_educativo"), "educacion", checks)
+        compare_tables(groups["dominio"], error_table(predictions, "dominio"), "dominio", checks)
+        recomputed_bands = error_table(predictions, "banda_salarial", band_labels(thresholds))
+        compare_tables(bands_file["bandas"], recomputed_bands, "bandas", checks)
+        recomputed_analysis = high_salary_analysis(predictions, thresholds, recomputed_bands)
+        for name in FINAL_MODELS:
+            checks.require(
+                recomputed_analysis["modelos"][name]["subestimacion_sistematica"] == analysis["modelos"][name]["subestimacion_sistematica"],
+                f"{name}: diagnostico de salarios altos no reproducible",
+            )
+        known = predictions.select("id_registro").join(spark.createDataFrame([(value,) for value in sample_ids], ["id_registro"]), "id_registro").count()
+        checks.require(known == len(sample_ids), "muestra con IDs fuera de la prueba")
+        expected_sample = deterministic_sample(predictions).select("id_registro").collect()
+        checks.require([row["id_registro"] for row in expected_sample] == sample_ids, "muestra de graficos no reproducible")
+        for name, path in (("regresion_lineal", LR_FINAL_MODEL), ("random_forest", RF_FINAL_MODEL)):
+            model = PipelineModel.load(str(path))
+            assembler = next(stage for stage in model.stages if isinstance(stage, VectorAssembler))
+            checks.require(assembler.getInputCols() == assembled_inputs(), f"{name}: predictores del pipeline")
+            estimator = model.stages[-1]
+            frozen = config[name]
+            if name == "regresion_lineal":
+                matches = close_to(estimator.getRegParam(), frozen["regParam"]) and close_to(estimator.getElasticNetParam(), frozen["elasticNetParam"]) and not estimator.getStandardization()
+            else:
+                matches = estimator.getNumTrees == frozen["numTrees"] and estimator.getMaxDepth() == frozen["maxDepth"] and estimator.getSeed() == SEED
+            checks.require(matches, f"{name}: hiperparametros persistidos distintos de los congelados")
+            reloaded = model.transform(test).select("id_registro", F.col("prediccion").alias("recargada"))
+            difference = predictions.join(reloaded, "id_registro").agg(F.max(F.abs(F.col(FINAL_MODELS[name]) - F.col("recargada")))).first()[0]
+            checks.require(difference is not None and difference <= 1e-6, f"{name}: modelo recargado difiere {difference}")
+        predictions.unpersist()
+    finally:
+        spark.stop()
+    write_json(FINAL_OUT / "validation_final_test.json", {"generado_utc": utc_now(), **checks.as_dict()})
+    status = "OK" if checks.ok else "FALLA"
+    print(f"VALIDACION_PRUEBA_FINAL={status} controles={checks.passed} fallas={len(checks.failures)} advertencias={len(checks.warnings)}")
+    return 0 if checks.ok else 1
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Laboratorio 7 - flujo final reproducible con Spark")
     group = parser.add_mutually_exclusive_group(required=True)
@@ -2318,6 +2829,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     group.add_argument("--validate-eda-clustering", action="store_true", help="valida artefactos persistidos de EDA y KMeans")
     group.add_argument("--models-validation", action="store_true", help="baseline, regresion lineal y Random Forest: T1-T3 vs 2025T4")
     group.add_argument("--validate-models-validation", action="store_true", help="valida seleccion temporal persistida")
+    group.add_argument("--final-test", action="store_true", help="reentrena con 2025 y evalua una vez en 2026T1")
+    group.add_argument("--validate-final-test", action="store_true", help="valida la prueba final persistida")
     parser.add_argument("--force", action="store_true", help="reprocesa periodos aunque existan artefactos vigentes")
     parser.add_argument("--only", nargs="+", choices=list(SOURCES_BY_PERIOD), help="procesa solo estos periodos")
     return parser.parse_args(argv)
@@ -2337,6 +2850,10 @@ def main(argv: list[str] | None = None) -> int:
         return run_models_validation()
     if args.validate_models_validation:
         return run_validate_models_validation()
+    if args.final_test:
+        return run_final_test(force=args.force)
+    if args.validate_final_test:
+        return run_validate_final_test()
     return run_validate_foundation()
 
 
