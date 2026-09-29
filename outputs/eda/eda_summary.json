@@ -1,0 +1,46 @@
+{
+  "generado_utc": "2026-09-29T06:17:01+00:00",
+  "segundos": 65.3,
+  "spark": "3.5.1",
+  "codigo_sha256": "a69f484c74d3f16a114a6a25902c939667a38a2df29891599601b0ff6f8333c3",
+  "entrada": {
+    "ruta": "data_processed/eligible_2025.parquet",
+    "n": 53025,
+    "archivos": 1,
+    "bytes": 1127750,
+    "sha256": "9fe539a9eb4036ba0f138de345094c358ad8f51977e417ee52fb7166612cfb77"
+  },
+  "muestra_graficos": {
+    "n": 5000,
+    "metodo": "orden por xxhash64(id_registro, 3066) y limite 5000",
+    "uso": "solo histogramas y dispersiones; estadisticas y metricas con Spark completo"
+  },
+  "k_seleccionado": 2,
+  "salidas": {
+    "tablas": [
+      "outputs/eda/descriptivos_2025.json",
+      "outputs/eda/descriptivos_trimestrales_2025.json",
+      "outputs/eda/categorias_2025.json",
+      "outputs/eda/correlacion_pearson_2025.json",
+      "outputs/eda/kmeans_seleccion.json",
+      "outputs/eda/clusters_perfiles.json"
+    ],
+    "figuras": {
+      "distribuciones": "outputs/eda/figures/distribuciones_2025.png",
+      "salario_por_categoria": "outputs/eda/figures/salario_mediano_por_categoria.png",
+      "evolucion_trimestral": "outputs/eda/figures/evolucion_trimestral_2025.png",
+      "correlacion": "outputs/eda/figures/correlacion_pearson_2025.png",
+      "kmeans_seleccion": "outputs/eda/figures/kmeans_silueta_wssse.png",
+      "clusters_centroides": "outputs/eda/figures/kmeans_centroides_estandarizados.png",
+      "clusters_muestra": "outputs/eda/figures/kmeans_clusters_muestra.png"
+    },
+    "clusters": "data_processed/clusters_2025.parquet",
+    "modelo_kmeans": "models/kmeans_2025"
+  },
+  "verificacion": {
+    "ok": true,
+    "controles_aprobados": 6,
+    "fallas": [],
+    "advertencias": []
+  }
+}

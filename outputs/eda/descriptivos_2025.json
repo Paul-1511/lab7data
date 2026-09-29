@@ -1,0 +1,71 @@
+{
+  "n": 53025,
+  "descriptivos": [
+    {
+      "variable": "salario_mensual",
+      "n": 53025,
+      "media": 3421.6842055634133,
+      "mediana": 3000.0,
+      "desviacion": 2902.1089638220783,
+      "minimo": 1.0,
+      "maximo": 99000.0,
+      "p25": 1800.0,
+      "p75": 4000.0,
+      "p95": 8000.0,
+      "asimetria": 5.99680248673773,
+      "curtosis": 103.5189177409249
+    },
+    {
+      "variable": "edad",
+      "n": 53025,
+      "media": 35.187647336162186,
+      "mediana": 33.0,
+      "desviacion": 13.520901607119596,
+      "minimo": 15.0,
+      "maximo": 89.0,
+      "p25": 24.0,
+      "p75": 44.0,
+      "p95": 61.0,
+      "asimetria": 0.7374108203676166,
+      "curtosis": 0.01012841416733945
+    },
+    {
+      "variable": "antiguedad",
+      "n": 53025,
+      "media": 5.558827597045413,
+      "mediana": 2.0,
+      "desviacion": 7.831017178756626,
+      "minimo": 0.0,
+      "maximo": 70.0,
+      "p25": 0.5,
+      "p75": 7.0,
+      "p95": 22.0,
+      "asimetria": 2.399258255897188,
+      "curtosis": 7.340299374393439
+    },
+    {
+      "variable": "horas_semanales",
+      "n": 53025,
+      "media": 46.30740216878831,
+      "mediana": 45.0,
+      "desviacion": 18.63040684352496,
+      "minimo": 1.0,
+      "maximo": 126.0,
+      "p25": 40.0,
+      "p75": 55.0,
+      "p95": 80.0,
+      "asimetria": 0.5901374266993921,
+      "curtosis": 1.708447547473944
+    }
+  ],
+  "asimetria_salario": {
+    "asimetria": 5.99680248673773,
+    "curtosis_exceso": 103.5189177409249,
+    "razon_media_mediana": 1.1405614018544712,
+    "asimetria_log_salario": -0.8454631365715051,
+    "p95": 8000.0,
+    "n_mayor_igual_p95": 2927,
+    "porcentaje_masa_salarial_mayor_igual_p95": 19.037770619589775,
+    "porcentaje_sobre_media": 43.722772277227726
+  }
+}

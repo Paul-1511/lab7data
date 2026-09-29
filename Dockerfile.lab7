@@ -1,0 +1,13 @@
+FROM spark_practica-pyspark:latest
+
+USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends procps \
+    && rm -rf /var/lib/apt/lists/* \
+    && python -m pip install --no-cache-dir openpyxl==3.1.5
+
+USER spark
+RUN python -c "import openpyxl, pyspark; print('openpyxl', openpyxl.__version__, 'pyspark', pyspark.__version__)" \
+    && ps --version
+
+WORKDIR /opt/app/lab7

@@ -1,0 +1,172 @@
+{
+  "2025T1": {
+    "faltantes_crudos": {
+      "ANIO": 0,
+      "TRIMESTRE": 0,
+      "DOMINIO": 0,
+      "NUM_HOGAR": 0,
+      "NUM_PERSONA": 0,
+      "FACTOR": 0,
+      "P02A03": 0,
+      "P03A03A": 6928,
+      "P05C07A": 29315,
+      "P05C07B": 29315,
+      "P05H01A": 29315,
+      "P05C16": 29315,
+      "OCUPADOS": 29315,
+      "P05D01": 38169
+    },
+    "valores_no_convertibles": {
+      "ANIO": 0,
+      "TRIMESTRE": 0,
+      "DOMINIO": 0,
+      "NUM_HOGAR": 0,
+      "NUM_PERSONA": 0,
+      "FACTOR": 0,
+      "P02A03": 0,
+      "P03A03A": 0,
+      "P05C07A": 0,
+      "P05C07B": 0,
+      "P05H01A": 0,
+      "P05C16": 0,
+      "OCUPADOS": 0,
+      "P05D01": 0
+    }
+  },
+  "2025T2": {
+    "faltantes_crudos": {
+      "ANIO": 0,
+      "TRIMESTRE": 0,
+      "DOMINIO": 0,
+      "NUM_HOGAR": 0,
+      "NUM_PERSONA": 0,
+      "FACTOR": 0,
+      "P02A03": 0,
+      "P03A03A": 6678,
+      "P05C07A": 28824,
+      "P05C07B": 28824,
+      "P05H01A": 28824,
+      "P05C16": 28824,
+      "OCUPADOS": 28824,
+      "P05D01": 37675
+    },
+    "valores_no_convertibles": {
+      "ANIO": 0,
+      "TRIMESTRE": 0,
+      "DOMINIO": 0,
+      "NUM_HOGAR": 0,
+      "NUM_PERSONA": 0,
+      "FACTOR": 0,
+      "P02A03": 0,
+      "P03A03A": 0,
+      "P05C07A": 0,
+      "P05C07B": 0,
+      "P05H01A": 0,
+      "P05C16": 0,
+      "OCUPADOS": 0,
+      "P05D01": 0
+    }
+  },
+  "2025T3": {
+    "faltantes_crudos": {
+      "ANIO": 0,
+      "TRIMESTRE": 0,
+      "DOMINIO": 0,
+      "NUM_HOGAR": 0,
+      "NUM_PERSONA": 0,
+      "FACTOR": 0,
+      "P02A03": 0,
+      "P03A03A": 6548,
+      "P05C07A": 29210,
+      "P05C07B": 29210,
+      "P05H01A": 29210,
+      "P05C16": 29210,
+      "OCUPADOS": 29210,
+      "P05D01": 38133
+    },
+    "valores_no_convertibles": {
+      "ANIO": 0,
+      "TRIMESTRE": 0,
+      "DOMINIO": 0,
+      "NUM_HOGAR": 0,
+      "NUM_PERSONA": 0,
+      "FACTOR": 0,
+      "P02A03": 0,
+      "P03A03A": 0,
+      "P05C07A": 0,
+      "P05C07B": 0,
+      "P05H01A": 0,
+      "P05C16": 0,
+      "OCUPADOS": 0,
+      "P05D01": 0
+    }
+  },
+  "2025T4": {
+    "faltantes_crudos": {
+      "ANIO": 0,
+      "TRIMESTRE": 0,
+      "DOMINIO": 0,
+      "NUM_HOGAR": 0,
+      "NUM_PERSONA": 0,
+      "FACTOR": 0,
+      "P02A03": 0,
+      "P03A03A": 6190,
+      "P05C07A": 28105,
+      "P05C07B": 28105,
+      "P05H01A": 28105,
+      "P05C16": 28105,
+      "OCUPADOS": 28105,
+      "P05D01": 36674
+    },
+    "valores_no_convertibles": {
+      "ANIO": 0,
+      "TRIMESTRE": 0,
+      "DOMINIO": 0,
+      "NUM_HOGAR": 0,
+      "NUM_PERSONA": 0,
+      "FACTOR": 0,
+      "P02A03": 0,
+      "P03A03A": 0,
+      "P05C07A": 0,
+      "P05C07B": 0,
+      "P05H01A": 0,
+      "P05C16": 0,
+      "OCUPADOS": 0,
+      "P05D01": 0
+    }
+  },
+  "2026T1": {
+    "faltantes_crudos": {
+      "ANIO": 0,
+      "TRIMESTRE": 0,
+      "DOMINIO": 0,
+      "NUM_HOGAR": 0,
+      "NUM_PERSONA": 0,
+      "FACTOR": 0,
+      "P02A03": 0,
+      "P03A03A": 6011,
+      "P05C07A": 28109,
+      "P05C07B": 28109,
+      "P05H01A": 28109,
+      "P05C16": 28109,
+      "OCUPADOS": 28109,
+      "P05D01": 36585
+    },
+    "valores_no_convertibles": {
+      "ANIO": 0,
+      "TRIMESTRE": 0,
+      "DOMINIO": 0,
+      "NUM_HOGAR": 0,
+      "NUM_PERSONA": 0,
+      "FACTOR": 0,
+      "P02A03": 0,
+      "P03A03A": 0,
+      "P05C07A": 0,
+      "P05C07B": 0,
+      "P05H01A": 0,
+      "P05C16": 0,
+      "OCUPADOS": 0,
+      "P05D01": 0
+    }
+  }
+}

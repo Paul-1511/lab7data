@@ -1,0 +1,732 @@
+{
+  "numericos": [
+    {
+      "periodo_archivo": "2025T1",
+      "variable": "salario_mensual",
+      "n": 13419,
+      "media": 3315.631939786869,
+      "mediana": 3000.0,
+      "desviacion": 2935.551849759873,
+      "minimo": 100.0,
+      "maximo": 99000.0,
+      "p25": 1600.0,
+      "p75": 3960.0,
+      "p95": 8000.0,
+      "asimetria": 6.433633409473592,
+      "curtosis": 122.38101195167516
+    },
+    {
+      "periodo_archivo": "2025T1",
+      "variable": "edad",
+      "n": 13419,
+      "media": 35.068186899172815,
+      "mediana": 33.0,
+      "desviacion": 13.52269256706927,
+      "minimo": 15.0,
+      "maximo": 89.0,
+      "p25": 24.0,
+      "p75": 44.0,
+      "p95": 61.0,
+      "asimetria": 0.7207148425910809,
+      "curtosis": -0.02134026957780044
+    },
+    {
+      "periodo_archivo": "2025T1",
+      "variable": "antiguedad",
+      "n": 13419,
+      "media": 5.77825595548599,
+      "mediana": 2.5,
+      "desviacion": 7.978480867804127,
+      "minimo": 0.0,
+      "maximo": 64.0,
+      "p25": 0.6666666666666666,
+      "p75": 8.0,
+      "p95": 22.0,
+      "asimetria": 2.3642295362523433,
+      "curtosis": 7.038696973771609
+    },
+    {
+      "periodo_archivo": "2025T1",
+      "variable": "horas_semanales",
+      "n": 13419,
+      "media": 45.909009613234964,
+      "mediana": 45.0,
+      "desviacion": 19.233272171922383,
+      "minimo": 1.0,
+      "maximo": 126.0,
+      "p25": 40.0,
+      "p75": 54.0,
+      "p95": 80.0,
+      "asimetria": 0.5696260962692568,
+      "curtosis": 1.7814638769644535
+    },
+    {
+      "periodo_archivo": "2025T2",
+      "variable": "salario_mensual",
+      "n": 13492,
+      "media": 3364.570782686036,
+      "mediana": 3000.0,
+      "desviacion": 2835.4488726646814,
+      "minimo": 30.0,
+      "maximo": 99000.0,
+      "p25": 1680.0,
+      "p75": 4000.0,
+      "p95": 8000.0,
+      "asimetria": 6.126200306859444,
+      "curtosis": 118.8901812887054
+    },
+    {
+      "periodo_archivo": "2025T2",
+      "variable": "edad",
+      "n": 13492,
+      "media": 34.97250222353988,
+      "mediana": 33.0,
+      "desviacion": 13.488508846457608,
+      "minimo": 15.0,
+      "maximo": 88.0,
+      "p25": 24.0,
+      "p75": 43.0,
+      "p95": 61.0,
+      "asimetria": 0.7587601696814603,
+      "curtosis": 0.04627221615670374
+    },
+    {
+      "periodo_archivo": "2025T2",
+      "variable": "antiguedad",
+      "n": 13492,
+      "media": 5.565155894851278,
+      "mediana": 2.0833333333333335,
+      "desviacion": 7.826971935500902,
+      "minimo": 0.0,
+      "maximo": 70.0,
+      "p25": 0.5,
+      "p75": 7.0,
+      "p95": 22.0,
+      "asimetria": 2.3940388807207595,
+      "curtosis": 7.277512409635445
+    },
+    {
+      "periodo_archivo": "2025T2",
+      "variable": "horas_semanales",
+      "n": 13492,
+      "media": 46.146086569819154,
+      "mediana": 45.0,
+      "desviacion": 18.675617043539013,
+      "minimo": 1.0,
+      "maximo": 126.0,
+      "p25": 40.0,
+      "p75": 55.0,
+      "p95": 80.44999999999891,
+      "asimetria": 0.5307596743664751,
+      "curtosis": 1.49065927658339
+    },
+    {
+      "periodo_archivo": "2025T3",
+      "variable": "salario_mensual",
+      "n": 13450,
+      "media": 3469.0746468401485,
+      "mediana": 3200.0,
+      "desviacion": 2945.2215304731653,
+      "minimo": 1.0,
+      "maximo": 99000.0,
+      "p25": 1800.0,
+      "p75": 4000.0,
+      "p95": 8000.0,
+      "asimetria": 6.590562520999643,
+      "curtosis": 120.9659071587617
+    },
+    {
+      "periodo_archivo": "2025T3",
+      "variable": "edad",
+      "n": 13450,
+      "media": 35.278810408921935,
+      "mediana": 33.0,
+      "desviacion": 13.458302910858766,
+      "minimo": 15.0,
+      "maximo": 88.0,
+      "p25": 24.0,
+      "p75": 44.0,
+      "p95": 61.0,
+      "asimetria": 0.7366339565199944,
+      "curtosis": 0.004419372287972845
+    },
+    {
+      "periodo_archivo": "2025T3",
+      "variable": "antiguedad",
+      "n": 13450,
+      "media": 5.458494423791834,
+      "mediana": 2.0,
+      "desviacion": 7.717103175602606,
+      "minimo": 0.0,
+      "maximo": 70.0,
+      "p25": 0.5,
+      "p75": 7.0,
+      "p95": 21.0,
+      "asimetria": 2.4026752381001057,
+      "curtosis": 7.397267612801983
+    },
+    {
+      "periodo_archivo": "2025T3",
+      "variable": "horas_semanales",
+      "n": 13450,
+      "media": 46.66297397769517,
+      "mediana": 45.0,
+      "desviacion": 18.409610741234044,
+      "minimo": 1.0,
+      "maximo": 126.0,
+      "p25": 40.0,
+      "p75": 55.0,
+      "p95": 81.54999999999927,
+      "asimetria": 0.6807497321846769,
+      "curtosis": 1.908933067303959
+    },
+    {
+      "periodo_archivo": "2025T4",
+      "variable": "salario_mensual",
+      "n": 12664,
+      "media": 3544.574936828806,
+      "mediana": 3200.0,
+      "desviacion": 2885.171449369987,
+      "minimo": 200.0,
+      "maximo": 60000.0,
+      "p25": 2000.0,
+      "p75": 4000.0,
+      "p95": 8000.0,
+      "asimetria": 4.734212427849654,
+      "curtosis": 47.359010799710546
+    },
+    {
+      "periodo_archivo": "2025T4",
+      "variable": "edad",
+      "n": 12664,
+      "media": 35.44662034112445,
+      "mediana": 33.0,
+      "desviacion": 13.61588184580075,
+      "minimo": 15.0,
+      "maximo": 88.0,
+      "p25": 25.0,
+      "p75": 44.0,
+      "p95": 62.0,
+      "asimetria": 0.7333398498361201,
+      "curtosis": 0.010248388407252396
+    },
+    {
+      "periodo_archivo": "2025T4",
+      "variable": "antiguedad",
+      "n": 12664,
+      "media": 5.426135765424302,
+      "mediana": 2.0,
+      "desviacion": 7.793473683678233,
+      "minimo": 0.0,
+      "maximo": 70.0,
+      "p25": 0.5,
+      "p75": 7.0,
+      "p95": 21.0,
+      "asimetria": 2.4384913252014395,
+      "curtosis": 7.676525248210856
+    },
+    {
+      "periodo_archivo": "2025T4",
+      "variable": "horas_semanales",
+      "n": 12664,
+      "media": 46.52376816171826,
+      "mediana": 45.0,
+      "desviacion": 18.152096458604436,
+      "minimo": 1.0,
+      "maximo": 126.0,
+      "p25": 40.0,
+      "p75": 55.0,
+      "p95": 80.0,
+      "asimetria": 0.5921204427756003,
+      "curtosis": 1.6066587015444496
+    }
+  ],
+  "composicion": {
+    "nivel_educativo": [
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "0",
+        "etiqueta": "Ninguno",
+        "n": 1050,
+        "porcentaje": 7.82472613458529,
+        "salario_mediana": 1500.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "1",
+        "etiqueta": "Preprimaria",
+        "n": 138,
+        "porcentaje": 1.0283925776883522,
+        "salario_mediana": 2050.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "2",
+        "etiqueta": "Primaria",
+        "n": 4062,
+        "porcentaje": 30.270511960652804,
+        "salario_mediana": 2000.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "3",
+        "etiqueta": "Básico",
+        "n": 2079,
+        "porcentaje": 15.492957746478874,
+        "salario_mediana": 2800.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "4",
+        "etiqueta": "Diversificado",
+        "n": 4196,
+        "porcentaje": 31.269096057828452,
+        "salario_mediana": 3600.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "5",
+        "etiqueta": "Superior",
+        "n": 1674,
+        "porcentaje": 12.474849094567404,
+        "salario_mediana": 4775.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "6",
+        "etiqueta": "Maestría",
+        "n": 202,
+        "porcentaje": 1.5053282658916463,
+        "salario_mediana": 10000.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "7",
+        "etiqueta": "Doctorado",
+        "n": 18,
+        "porcentaje": 0.1341381623071764,
+        "salario_mediana": 9150.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "0",
+        "etiqueta": "Ninguno",
+        "n": 1044,
+        "porcentaje": 7.737918766676549,
+        "salario_mediana": 1500.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "1",
+        "etiqueta": "Preprimaria",
+        "n": 122,
+        "porcentaje": 0.9042395493625852,
+        "salario_mediana": 2300.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "2",
+        "etiqueta": "Primaria",
+        "n": 4032,
+        "porcentaje": 29.88437592647495,
+        "salario_mediana": 2200.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "3",
+        "etiqueta": "Básico",
+        "n": 2080,
+        "porcentaje": 15.416543136673585,
+        "salario_mediana": 2800.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "4",
+        "etiqueta": "Diversificado",
+        "n": 4334,
+        "porcentaje": 32.122739401126594,
+        "salario_mediana": 3600.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "5",
+        "etiqueta": "Superior",
+        "n": 1663,
+        "porcentaje": 12.325822709753929,
+        "salario_mediana": 4800.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "6",
+        "etiqueta": "Maestría",
+        "n": 201,
+        "porcentaje": 1.489771716572784,
+        "salario_mediana": 10000.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "7",
+        "etiqueta": "Doctorado",
+        "n": 16,
+        "porcentaje": 0.11858879335902757,
+        "salario_mediana": 12250.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "0",
+        "etiqueta": "Ninguno",
+        "n": 958,
+        "porcentaje": 7.122676579925651,
+        "salario_mediana": 1600.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "1",
+        "etiqueta": "Preprimaria",
+        "n": 108,
+        "porcentaje": 0.8029739776951673,
+        "salario_mediana": 2400.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "2",
+        "etiqueta": "Primaria",
+        "n": 3950,
+        "porcentaje": 29.36802973977695,
+        "salario_mediana": 2400.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "3",
+        "etiqueta": "Básico",
+        "n": 2095,
+        "porcentaje": 15.576208178438662,
+        "salario_mediana": 3000.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "4",
+        "etiqueta": "Diversificado",
+        "n": 4332,
+        "porcentaje": 32.20817843866171,
+        "salario_mediana": 3700.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "5",
+        "etiqueta": "Superior",
+        "n": 1797,
+        "porcentaje": 13.360594795539033,
+        "salario_mediana": 5000.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "6",
+        "etiqueta": "Maestría",
+        "n": 196,
+        "porcentaje": 1.4572490706319703,
+        "salario_mediana": 10000.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "7",
+        "etiqueta": "Doctorado",
+        "n": 14,
+        "porcentaje": 0.10408921933085502,
+        "salario_mediana": 15000.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "0",
+        "etiqueta": "Ninguno",
+        "n": 943,
+        "porcentaje": 7.446304485154769,
+        "salario_mediana": 1700.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "1",
+        "etiqueta": "Preprimaria",
+        "n": 91,
+        "porcentaje": 0.7185723310170562,
+        "salario_mediana": 2120.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "2",
+        "etiqueta": "Primaria",
+        "n": 3778,
+        "porcentaje": 29.83259633607075,
+        "salario_mediana": 2400.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "3",
+        "etiqueta": "Básico",
+        "n": 1995,
+        "porcentaje": 15.753316487681618,
+        "salario_mediana": 3000.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "4",
+        "etiqueta": "Diversificado",
+        "n": 3989,
+        "porcentaje": 31.49873657612129,
+        "salario_mediana": 3800.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "5",
+        "etiqueta": "Superior",
+        "n": 1684,
+        "porcentaje": 13.297536323436512,
+        "salario_mediana": 5000.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "6",
+        "etiqueta": "Maestría",
+        "n": 172,
+        "porcentaje": 1.3581806696146557,
+        "salario_mediana": 10500.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "7",
+        "etiqueta": "Doctorado",
+        "n": 12,
+        "porcentaje": 0.09475679090334807,
+        "salario_mediana": 13500.0
+      }
+    ],
+    "categoria_ocupacional": [
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "1",
+        "etiqueta": "Empleado de gobierno",
+        "n": 1623,
+        "porcentaje": 12.094790968030404,
+        "salario_mediana": 5000.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "2",
+        "etiqueta": "Empleado de empresa privada",
+        "n": 6825,
+        "porcentaje": 50.86071987480438,
+        "salario_mediana": 3500.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "3",
+        "etiqueta": "Jornalero o peón",
+        "n": 4057,
+        "porcentaje": 30.233251360011923,
+        "salario_mediana": 1625.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "4",
+        "etiqueta": "Servicio doméstico",
+        "n": 914,
+        "porcentaje": 6.81123779715329,
+        "salario_mediana": 1000.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "1",
+        "etiqueta": "Empleado de gobierno",
+        "n": 1634,
+        "porcentaje": 12.11088052179069,
+        "salario_mediana": 5000.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "2",
+        "etiqueta": "Empleado de empresa privada",
+        "n": 7136,
+        "porcentaje": 52.890601838126294,
+        "salario_mediana": 3600.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "3",
+        "etiqueta": "Jornalero o peón",
+        "n": 3702,
+        "porcentaje": 27.438482063445004,
+        "salario_mediana": 1800.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "4",
+        "etiqueta": "Servicio doméstico",
+        "n": 1020,
+        "porcentaje": 7.560035576638008,
+        "salario_mediana": 1000.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "1",
+        "etiqueta": "Empleado de gobierno",
+        "n": 1681,
+        "porcentaje": 12.49814126394052,
+        "salario_mediana": 5000.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "2",
+        "etiqueta": "Empleado de empresa privada",
+        "n": 7566,
+        "porcentaje": 56.25278810408922,
+        "salario_mediana": 3600.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "3",
+        "etiqueta": "Jornalero o peón",
+        "n": 3212,
+        "porcentaje": 23.881040892193308,
+        "salario_mediana": 1800.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "4",
+        "etiqueta": "Servicio doméstico",
+        "n": 991,
+        "porcentaje": 7.368029739776952,
+        "salario_mediana": 1000.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "1",
+        "etiqueta": "Empleado de gobierno",
+        "n": 1637,
+        "porcentaje": 12.926405559065067,
+        "salario_mediana": 5000.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "2",
+        "etiqueta": "Empleado de empresa privada",
+        "n": 7175,
+        "porcentaje": 56.6566645609602,
+        "salario_mediana": 3600.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "3",
+        "etiqueta": "Jornalero o peón",
+        "n": 2871,
+        "porcentaje": 22.67056222362603,
+        "salario_mediana": 1800.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "4",
+        "etiqueta": "Servicio doméstico",
+        "n": 981,
+        "porcentaje": 7.746367656348705,
+        "salario_mediana": 1000.0
+      }
+    ],
+    "dominio": [
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "1",
+        "etiqueta": "Urbano Metropolitano",
+        "n": 5481,
+        "porcentaje": 40.84507042253521,
+        "salario_mediana": 3600.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "2",
+        "etiqueta": "Resto Urbano",
+        "n": 5167,
+        "porcentaje": 38.5051047022878,
+        "salario_mediana": 2700.0
+      },
+      {
+        "periodo_archivo": "2025T1",
+        "codigo": "3",
+        "etiqueta": "Rural Nacional",
+        "n": 2771,
+        "porcentaje": 20.64982487517699,
+        "salario_mediana": 2000.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "1",
+        "etiqueta": "Urbano Metropolitano",
+        "n": 5581,
+        "porcentaje": 41.36525348354581,
+        "salario_mediana": 3680.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "2",
+        "etiqueta": "Resto Urbano",
+        "n": 5175,
+        "porcentaje": 38.35606285206048,
+        "salario_mediana": 2800.0
+      },
+      {
+        "periodo_archivo": "2025T2",
+        "codigo": "3",
+        "etiqueta": "Rural Nacional",
+        "n": 2736,
+        "porcentaje": 20.278683664393714,
+        "salario_mediana": 2000.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "1",
+        "etiqueta": "Urbano Metropolitano",
+        "n": 5690,
+        "porcentaje": 42.30483271375465,
+        "salario_mediana": 3800.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "2",
+        "etiqueta": "Resto Urbano",
+        "n": 5076,
+        "porcentaje": 37.739776951672866,
+        "salario_mediana": 3000.0
+      },
+      {
+        "periodo_archivo": "2025T3",
+        "codigo": "3",
+        "etiqueta": "Rural Nacional",
+        "n": 2684,
+        "porcentaje": 19.955390334572492,
+        "salario_mediana": 2160.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "1",
+        "etiqueta": "Urbano Metropolitano",
+        "n": 5320,
+        "porcentaje": 42.00884396715098,
+        "salario_mediana": 3800.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "2",
+        "etiqueta": "Resto Urbano",
+        "n": 4728,
+        "porcentaje": 37.33417561591914,
+        "salario_mediana": 3000.0
+      },
+      {
+        "periodo_archivo": "2025T4",
+        "codigo": "3",
+        "etiqueta": "Rural Nacional",
+        "n": 2616,
+        "porcentaje": 20.65698041692988,
+        "salario_mediana": 2200.0
+      }
+    ]
+  }
+}

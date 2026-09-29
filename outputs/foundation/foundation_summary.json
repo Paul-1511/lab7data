@@ -1,0 +1,27 @@
+{
+  "generado_utc": "2026-09-29T05:54:30+00:00",
+  "segundos": 340.5,
+  "elegibles_por_periodo": {
+    "2025T1": 13419,
+    "2025T2": 13492,
+    "2025T3": 13450,
+    "2025T4": 12664,
+    "2026T1": 13258
+  },
+  "controles": {
+    "desarrollo_2025T1_T3": 40361,
+    "validacion_2025T4": 12664,
+    "reentrenamiento_2025": 53025,
+    "prueba_2026T1": 13258
+  },
+  "filas_crudas": {
+    "2025": 203676,
+    "2026": 49843
+  },
+  "verificacion": {
+    "ok": true,
+    "controles_aprobados": 307,
+    "fallas": [],
+    "advertencias": []
+  }
+}

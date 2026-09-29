@@ -1,0 +1,184 @@
+{
+  "generado_utc": "2026-09-29T05:54:29+00:00",
+  "entorno": {
+    "python": "3.11.16",
+    "plataforma": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "cpu": 2,
+    "java": "openjdk version \"17.0.20.1\" 2026-08-18",
+    "paquetes": {
+      "pyspark": "3.5.1",
+      "pandas": "3.0.6",
+      "pyarrow": "25.0.1",
+      "numpy": "2.4.6",
+      "openpyxl": "3.1.5",
+      "matplotlib": "3.11.2",
+      "seaborn": "0.13.2"
+    },
+    "ps_disponible": true,
+    "memoria": {
+      "mem_total_gib": 1.86,
+      "mem_available_gib": 0.43,
+      "cgroup_limit_gib": null
+    },
+    "spark_master": "local[2]",
+    "spark_driver_memory": "1g"
+  },
+  "spark": "3.5.1",
+  "codigo_sha256": "fd0d12ccf63bd22699de479526f5ae0dd6570086f07af82c5c5312fda11db3e5",
+  "columnas_requeridas": [
+    "ANIO",
+    "TRIMESTRE",
+    "DOMINIO",
+    "NUM_HOGAR",
+    "NUM_PERSONA",
+    "FACTOR",
+    "P02A03",
+    "P03A03A",
+    "P05C07A",
+    "P05C07B",
+    "P05H01A",
+    "P05C16",
+    "OCUPADOS",
+    "P05D01"
+  ],
+  "fuentes": [
+    {
+      "periodo": "2025T1",
+      "archivo": "Personas_2025T1.xlsx",
+      "sha256": "42cc1564b995f4da19322b1e4bca7a74db38053f85eb411ec9ac8b7907e843f9",
+      "bytes": 47749546,
+      "mib": 45.54,
+      "hoja": "Personas_ENEIC_T1_2025",
+      "hojas": [
+        "Personas_ENEIC_T1_2025"
+      ],
+      "hojas_visibles": [
+        "Personas_ENEIC_T1_2025"
+      ],
+      "columnas_encabezado": 270,
+      "filas_datos": 51588,
+      "anio_archivo": 2025,
+      "trimestre_calendario": 1
+    },
+    {
+      "periodo": "2025T2",
+      "archivo": "Personas_2025T2.xlsx",
+      "sha256": "73b689d36e0e354a641d5951bca06c834495d8c9561e66a2c07ee1f2c27be2be",
+      "bytes": 16905555,
+      "mib": 16.12,
+      "hoja": "Personas ENEIC T2-2025",
+      "hojas": [
+        "Personas ENEIC T2-2025"
+      ],
+      "hojas_visibles": [
+        "Personas ENEIC T2-2025"
+      ],
+      "columnas_encabezado": 270,
+      "filas_datos": 51167,
+      "anio_archivo": 2025,
+      "trimestre_calendario": 2
+    },
+    {
+      "periodo": "2025T3",
+      "archivo": "Personas_2025T3.xlsx",
+      "sha256": "5c8cb5e37e91ee1e51fe3b8b44995f561b7bb1c3da3c1f58263ca40c1f1b8e4d",
+      "bytes": 47601956,
+      "mib": 45.4,
+      "hoja": "Personas ENEIC T3-2025",
+      "hojas": [
+        "Personas ENEIC T3-2025"
+      ],
+      "hojas_visibles": [
+        "Personas ENEIC T3-2025"
+      ],
+      "columnas_encabezado": 270,
+      "filas_datos": 51583,
+      "anio_archivo": 2025,
+      "trimestre_calendario": 3
+    },
+    {
+      "periodo": "2025T4",
+      "archivo": "Personas_2025T4.xlsx",
+      "sha256": "123049f9adfbcbcd026a850082b99cff38f549f75e972d69971b08754e7214d1",
+      "bytes": 51329132,
+      "mib": 48.95,
+      "hoja": "Base de datos Personas ENEIC IV",
+      "hojas": [
+        "Base de datos Personas ENEIC IV"
+      ],
+      "hojas_visibles": [
+        "Base de datos Personas ENEIC IV"
+      ],
+      "columnas_encabezado": 302,
+      "filas_datos": 49338,
+      "anio_archivo": 2025,
+      "trimestre_calendario": 4
+    },
+    {
+      "periodo": "2026T1",
+      "archivo": "Personas_2026T1.xlsx",
+      "sha256": "988cfd00f48747b61f439fef59f6f03c989276d47dcb08ee9442b48d5e838409",
+      "bytes": 46038513,
+      "mib": 43.91,
+      "hoja": "Personas_ENEIC_T1-2026",
+      "hojas": [
+        "Personas_ENEIC_T1-2026"
+      ],
+      "hojas_visibles": [
+        "Personas_ENEIC_T1-2026"
+      ],
+      "columnas_encabezado": 270,
+      "filas_datos": 49843,
+      "anio_archivo": 2026,
+      "trimestre_calendario": 1
+    }
+  ],
+  "diccionarios": [
+    {
+      "periodo": "2025T1",
+      "archivo": "Diccionario_Personas_ENEIC_I-2025.xlsx",
+      "presente": true,
+      "bytes": 73967,
+      "sha256": "df14f9572d944f946c5519d7120892d7b04042d277f807c0a7116ff14dc2de33"
+    },
+    {
+      "periodo": "2025T2",
+      "archivo": "Diccionario_Personas_ENEIC_II-2025.xlsx",
+      "presente": true,
+      "bytes": 73969,
+      "sha256": "b4414613392697baa4d2b251ba8ba9a23e62086c4567b104836109af1135f51d"
+    },
+    {
+      "periodo": "2025T3",
+      "archivo": "Diccionario-Personas-ENEIC-III-2025.xlsx",
+      "presente": true,
+      "bytes": 60951,
+      "sha256": "6a86e9c52816c0fa74e4719b58113ebb84b742f7cb2d681952d03f53a6aed63e"
+    },
+    {
+      "periodo": "2025T4",
+      "archivo": "Diccionario-Personas-ENEIC-IV-2025.xlsx",
+      "presente": true,
+      "bytes": 72430,
+      "sha256": "3336445f9e247f592b4f58415fbfa47080926000558b6f7f8c274964fce47abe"
+    },
+    {
+      "periodo": "2026T1",
+      "archivo": "Diccionario-Personas-ENEIC-I-2026.xlsx",
+      "presente": true,
+      "bytes": 60935,
+      "sha256": "3a1c4eda7b4dd8e4252ae03fe3aca1b2794b93dc95a4654f9a44f8a12d3afd5a"
+    }
+  ],
+  "limitaciones": [
+    "Categorias conservadas como codigos normalizados; las etiquetas oficiales del diccionario se incorporaran en la fase de EDA.",
+    "Rangos de codigos validados contra los codigos observados en la auditoria: DOMINIO 1-3, P03A03A 0-7, P05C16 1-9, OCUPADOS 1.",
+    "periodo_archivo, anio_archivo y trimestre_calendario se derivan del manifiesto; TRIMESTRE original se conserva sin ajustes."
+  ],
+  "salidas": {
+    "eligible_2025": "data_processed/eligible_2025.parquet",
+    "eligible_2026": "data_processed/eligible_2026.parquet",
+    "seleccion_tipada": "data_processed/foundation/selected_typed",
+    "elegibles_por_periodo": "data_processed/foundation/eligible_by_period"
+  }
+}

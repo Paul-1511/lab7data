@@ -1,0 +1,78 @@
+{
+  "resultados": [
+    {
+      "k": 2,
+      "silueta": 0.46655383039088794,
+      "wssse": 158529.27273933202,
+      "tamanos": [
+        37182,
+        15843
+      ],
+      "iteraciones": 27,
+      "segundos": 6.8
+    },
+    {
+      "k": 3,
+      "silueta": 0.3686256697621884,
+      "wssse": 131633.25708696424,
+      "tamanos": [
+        26078,
+        8412,
+        18535
+      ],
+      "iteraciones": 81,
+      "segundos": 7.5,
+      "reduccion_wssse_pct": 16.965961672323203
+    },
+    {
+      "k": 4,
+      "silueta": 0.40464604025652773,
+      "wssse": 109241.5360720311,
+      "tamanos": [
+        25456,
+        11509,
+        7146,
+        8914
+      ],
+      "iteraciones": 24,
+      "segundos": 3.0,
+      "reduccion_wssse_pct": 17.010686744718264
+    },
+    {
+      "k": 5,
+      "silueta": 0.367756298495632,
+      "wssse": 95220.4603128206,
+      "tamanos": [
+        11546,
+        18953,
+        4614,
+        10455,
+        7457
+      ],
+      "iteraciones": 27,
+      "segundos": 3.0,
+      "reduccion_wssse_pct": 12.834930982630409
+    }
+  ],
+  "k_seleccionado": 2,
+  "en_limite_superior": false,
+  "criterio": "mayor silueta (distancia euclidiana cuadrada) entre K=2..5; WSSSE se reporta como evidencia complementaria de codo",
+  "alcance": "mejor K entre los valores probados, no un optimo universal",
+  "variables_ajuste": [
+    "edad",
+    "antiguedad",
+    "horas_semanales",
+    "nivel_educativo_ordinal"
+  ],
+  "variables_caracterizacion": [
+    "salario_mensual",
+    "categoria_ocupacional",
+    "dominio"
+  ],
+  "salario_excluido_del_ajuste": true,
+  "estandarizacion": "StandardScaler(withMean=True, withStd=True) ajustado con todos los elegibles de 2025",
+  "nivel_educativo": "codigo ordinal 0-7 tratado como numerico para el ajuste",
+  "semilla": 3066,
+  "max_iter": 100,
+  "init_mode": "k-means||"
+}

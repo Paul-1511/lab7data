@@ -1,0 +1,45 @@
+{
+  "por_periodo": {
+    "2025T1": {
+      "filas": 51588,
+      "llaves_nulas": 0,
+      "llaves_distintas": 51588,
+      "llaves_duplicadas": 0,
+      "duplicados_exactos_columnas_seleccionadas": 0
+    },
+    "2025T2": {
+      "filas": 51167,
+      "llaves_nulas": 0,
+      "llaves_distintas": 51167,
+      "llaves_duplicadas": 0,
+      "duplicados_exactos_columnas_seleccionadas": 0
+    },
+    "2025T3": {
+      "filas": 51583,
+      "llaves_nulas": 0,
+      "llaves_distintas": 51583,
+      "llaves_duplicadas": 0,
+      "duplicados_exactos_columnas_seleccionadas": 0
+    },
+    "2025T4": {
+      "filas": 49338,
+      "llaves_nulas": 0,
+      "llaves_distintas": 49338,
+      "llaves_duplicadas": 0,
+      "duplicados_exactos_columnas_seleccionadas": 0
+    },
+    "2026T1": {
+      "filas": 49843,
+      "llaves_nulas": 0,
+      "llaves_distintas": 49843,
+      "llaves_duplicadas": 0,
+      "duplicados_exactos_columnas_seleccionadas": 0
+    }
+  },
+  "entre_periodos": {
+    "filas_seleccionadas_totales": 253519,
+    "llaves_periodo_distintas": 253519,
+    "llaves_periodo_duplicadas": 0,
+    "pares_hogar_persona_en_varios_periodos": 71496
+  }
+}

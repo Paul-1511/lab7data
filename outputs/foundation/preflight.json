@@ -1,0 +1,79 @@
+{
+  "generado_utc": "2026-09-29T06:04:46+00:00",
+  "entorno": {
+    "python": "3.11.16",
+    "plataforma": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "cpu": 4,
+    "java": "openjdk version \"17.0.20.1\" 2026-08-18",
+    "paquetes": {
+      "pyspark": "3.5.1",
+      "pandas": "3.0.6",
+      "pyarrow": "25.0.1",
+      "numpy": "2.4.6",
+      "openpyxl": "3.1.5",
+      "matplotlib": "3.11.2",
+      "seaborn": "0.13.2"
+    },
+    "ps_disponible": true,
+    "memoria": {
+      "mem_total_gib": 7.76,
+      "mem_available_gib": 7.17,
+      "cgroup_limit_gib": null
+    },
+    "spark_master": "local[2]",
+    "spark_driver_memory": "1g"
+  },
+  "fuentes": [
+    {
+      "periodo": "2025T1",
+      "archivo": "Personas_2025T1.xlsx",
+      "presente": true,
+      "mib": 45.5,
+      "diccionario": "Diccionario_Personas_ENEIC_I-2025.xlsx",
+      "diccionario_presente": true
+    },
+    {
+      "periodo": "2025T2",
+      "archivo": "Personas_2025T2.xlsx",
+      "presente": true,
+      "mib": 16.1,
+      "diccionario": "Diccionario_Personas_ENEIC_II-2025.xlsx",
+      "diccionario_presente": true
+    },
+    {
+      "periodo": "2025T3",
+      "archivo": "Personas_2025T3.xlsx",
+      "presente": true,
+      "mib": 45.4,
+      "diccionario": "Diccionario-Personas-ENEIC-III-2025.xlsx",
+      "diccionario_presente": true
+    },
+    {
+      "periodo": "2025T4",
+      "archivo": "Personas_2025T4.xlsx",
+      "presente": true,
+      "mib": 49.0,
+      "diccionario": "Diccionario-Personas-ENEIC-IV-2025.xlsx",
+      "diccionario_presente": true
+    },
+    {
+      "periodo": "2026T1",
+      "archivo": "Personas_2026T1.xlsx",
+      "presente": true,
+      "mib": 43.9,
+      "diccionario": "Diccionario-Personas-ENEIC-I-2026.xlsx",
+      "diccionario_presente": true
+    }
+  ],
+  "spark": {
+    "version": "3.5.1",
+    "filas": 10,
+    "suma_id": 45
+  },
+  "verificacion": {
+    "ok": true,
+    "controles_aprobados": 28,
+    "fallas": [],
+    "advertencias": []
+  }
+}

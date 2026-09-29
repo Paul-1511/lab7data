@@ -1,0 +1,153 @@
+{
+  "etiquetas": {
+    "nivel_educativo": {
+      "0": "Ninguno",
+      "1": "Preprimaria",
+      "2": "Primaria",
+      "3": "Básico",
+      "4": "Diversificado",
+      "5": "Superior",
+      "6": "Maestría",
+      "7": "Doctorado"
+    },
+    "categoria_ocupacional": {
+      "1": "Empleado de gobierno",
+      "2": "Empleado de empresa privada",
+      "3": "Jornalero o peón",
+      "4": "Servicio doméstico"
+    },
+    "dominio": {
+      "1": "Urbano Metropolitano",
+      "2": "Resto Urbano",
+      "3": "Rural Nacional"
+    }
+  },
+  "tablas": {
+    "nivel_educativo": [
+      {
+        "codigo": "0",
+        "etiqueta": "Ninguno",
+        "n": 3995,
+        "porcentaje": 7.534181989627534,
+        "salario_media": 1767.0911138923655,
+        "salario_mediana": 1500.0
+      },
+      {
+        "codigo": "1",
+        "etiqueta": "Preprimaria",
+        "n": 459,
+        "porcentaje": 0.8656294200848657,
+        "salario_media": 2241.8976034858388,
+        "salario_mediana": 2160.0
+      },
+      {
+        "codigo": "2",
+        "etiqueta": "Primaria",
+        "n": 15822,
+        "porcentaje": 29.838755304101838,
+        "salario_media": 2307.956389836936,
+        "salario_mediana": 2200.0
+      },
+      {
+        "codigo": "3",
+        "etiqueta": "Básico",
+        "n": 8249,
+        "porcentaje": 15.556812824139557,
+        "salario_media": 2730.200266698994,
+        "salario_mediana": 2800.0
+      },
+      {
+        "codigo": "4",
+        "etiqueta": "Diversificado",
+        "n": 16851,
+        "porcentaje": 31.77934936350778,
+        "salario_media": 3796.407987656519,
+        "salario_mediana": 3600.0
+      },
+      {
+        "codigo": "5",
+        "etiqueta": "Superior",
+        "n": 6818,
+        "porcentaje": 12.858085808580858,
+        "salario_media": 5965.295247873277,
+        "salario_mediana": 5000.0
+      },
+      {
+        "codigo": "6",
+        "etiqueta": "Maestría",
+        "n": 771,
+        "porcentaje": 1.454031117397454,
+        "salario_media": 11409.269779507134,
+        "salario_mediana": 10000.0
+      },
+      {
+        "codigo": "7",
+        "etiqueta": "Doctorado",
+        "n": 60,
+        "porcentaje": 0.11315417256011315,
+        "salario_media": 14452.266666666666,
+        "salario_mediana": 12000.0
+      }
+    ],
+    "categoria_ocupacional": [
+      {
+        "codigo": "1",
+        "etiqueta": "Empleado de gobierno",
+        "n": 6575,
+        "porcentaje": 12.3998114097124,
+        "salario_media": 5971.534448669201,
+        "salario_mediana": 5000.0
+      },
+      {
+        "codigo": "2",
+        "etiqueta": "Empleado de empresa privada",
+        "n": 28702,
+        "porcentaje": 54.12918434700613,
+        "salario_media": 3875.139641836806,
+        "salario_mediana": 3567.5
+      },
+      {
+        "codigo": "3",
+        "etiqueta": "Jornalero o peón",
+        "n": 13842,
+        "porcentaje": 26.104667609618105,
+        "salario_media": 1878.6093772576216,
+        "salario_mediana": 1800.0
+      },
+      {
+        "codigo": "4",
+        "etiqueta": "Servicio doméstico",
+        "n": 3906,
+        "porcentaje": 7.366336633663367,
+        "salario_media": 1265.7442396313363,
+        "salario_mediana": 1000.0
+      }
+    ],
+    "dominio": [
+      {
+        "codigo": "1",
+        "etiqueta": "Urbano Metropolitano",
+        "n": 22072,
+        "porcentaje": 41.625648279113626,
+        "salario_media": 4190.893892714752,
+        "salario_mediana": 3700.0
+      },
+      {
+        "codigo": "2",
+        "etiqueta": "Resto Urbano",
+        "n": 20146,
+        "porcentaje": 37.993399339933994,
+        "salario_media": 3131.0609053906483,
+        "salario_mediana": 2880.0
+      },
+      {
+        "codigo": "3",
+        "etiqueta": "Rural Nacional",
+        "n": 10807,
+        "porcentaje": 20.38095238095238,
+        "salario_media": 2392.434718238179,
+        "salario_mediana": 2000.0
+      }
+    ]
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "2025T1": [
+    {
+      "paso": "1_edad",
+      "regla": "P02A03 numerico, finito y >= 15",
+      "antes": 51588,
+      "excluidos": 16253,
+      "despues": 35335
+    },
+    {
+      "paso": "2_ocupado_categoria",
+      "regla": "OCUPADOS == 1 y P05C16 en {1,2,3,4}",
+      "antes": 35335,
+      "excluidos": 21916,
+      "despues": 13419
+    },
+    {
+      "paso": "3_salario",
+      "regla": "P05D01 numerico, finito y > 0",
+      "antes": 13419,
+      "excluidos": 0,
+      "despues": 13419
+    },
+    {
+      "paso": "4_antiguedad_componentes",
+      "regla": "P05C07A >= 0 y P05C07B entero entre 0 y 11",
+      "antes": 13419,
+      "excluidos": 0,
+      "despues": 13419
+    },
+    {
+      "paso": "5_antiguedad_edad",
+      "regla": "P05C07A + P05C07B/12 <= edad",
+      "antes": 13419,
+      "excluidos": 0,
+      "despues": 13419
+    },
+    {
+      "paso": "6_horas",
+      "regla": "P05H01A numerico, finito, > 0 y <= 168",
+      "antes": 13419,
+      "excluidos": 0,
+      "despues": 13419
+    }
+  ],
+  "2025T2": [
+    {
+      "paso": "1_edad",
+      "regla": "P02A03 numerico, finito y >= 15",
+      "antes": 51167,
+      "excluidos": 15882,
+      "despues": 35285
+    },
+    {
+      "paso": "2_ocupado_categoria",
+      "regla": "OCUPADOS == 1 y P05C16 en {1,2,3,4}",
+      "antes": 35285,
+      "excluidos": 21793,
+      "despues": 13492
+    },
+    {
+      "paso": "3_salario",
+      "regla": "P05D01 numerico, finito y > 0",
+      "antes": 13492,
+      "excluidos": 0,
+      "despues": 13492
+    },
+    {
+      "paso": "4_antiguedad_componentes",
+      "regla": "P05C07A >= 0 y P05C07B entero entre 0 y 11",
+      "antes": 13492,
+      "excluidos": 0,
+      "despues": 13492
+    },
+    {
+      "paso": "5_antiguedad_edad",
+      "regla": "P05C07A + P05C07B/12 <= edad",
+      "antes": 13492,
+      "excluidos": 0,
+      "despues": 13492
+    },
+    {
+      "paso": "6_horas",
+      "regla": "P05H01A numerico, finito, > 0 y <= 168",
+      "antes": 13492,
+      "excluidos": 0,
+      "despues": 13492
+    }
+  ],
+  "2025T3": [
+    {
+      "paso": "1_edad",
+      "regla": "P02A03 numerico, finito y >= 15",
+      "antes": 51583,
+      "excluidos": 15767,
+      "despues": 35816
+    },
+    {
+      "paso": "2_ocupado_categoria",
+      "regla": "OCUPADOS == 1 y P05C16 en {1,2,3,4}",
+      "antes": 35816,
+      "excluidos": 22366,
+      "despues": 13450
+    },
+    {
+      "paso": "3_salario",
+      "regla": "P05D01 numerico, finito y > 0",
+      "antes": 13450,
+      "excluidos": 0,
+      "despues": 13450
+    },
+    {
+      "paso": "4_antiguedad_componentes",
+      "regla": "P05C07A >= 0 y P05C07B entero entre 0 y 11",
+      "antes": 13450,
+      "excluidos": 0,
+      "despues": 13450
+    },
+    {
+      "paso": "5_antiguedad_edad",
+      "regla": "P05C07A + P05C07B/12 <= edad",
+      "antes": 13450,
+      "excluidos": 0,
+      "despues": 13450
+    },
+    {
+      "paso": "6_horas",
+      "regla": "P05H01A numerico, finito, > 0 y <= 168",
+      "antes": 13450,
+      "excluidos": 0,
+      "despues": 13450
+    }
+  ],
+  "2025T4": [
+    {
+      "paso": "1_edad",
+      "regla": "P02A03 numerico, finito y >= 15",
+      "antes": 49338,
+      "excluidos": 14984,
+      "despues": 34354
+    },
+    {
+      "paso": "2_ocupado_categoria",
+      "regla": "OCUPADOS == 1 y P05C16 en {1,2,3,4}",
+      "antes": 34354,
+      "excluidos": 21690,
+      "despues": 12664
+    },
+    {
+      "paso": "3_salario",
+      "regla": "P05D01 numerico, finito y > 0",
+      "antes": 12664,
+      "excluidos": 0,
+      "despues": 12664
+    },
+    {
+      "paso": "4_antiguedad_componentes",
+      "regla": "P05C07A >= 0 y P05C07B entero entre 0 y 11",
+      "antes": 12664,
+      "excluidos": 0,
+      "despues": 12664
+    },
+    {
+      "paso": "5_antiguedad_edad",
+      "regla": "P05C07A + P05C07B/12 <= edad",
+      "antes": 12664,
+      "excluidos": 0,
+      "despues": 12664
+    },
+    {
+      "paso": "6_horas",
+      "regla": "P05H01A numerico, finito, > 0 y <= 168",
+      "antes": 12664,
+      "excluidos": 0,
+      "despues": 12664
+    }
+  ],
+  "2026T1": [
+    {
+      "paso": "1_edad",
+      "regla": "P02A03 numerico, finito y >= 15",
+      "antes": 49843,
+      "excluidos": 14803,
+      "despues": 35040
+    },
+    {
+      "paso": "2_ocupado_categoria",
+      "regla": "OCUPADOS == 1 y P05C16 en {1,2,3,4}",
+      "antes": 35040,
+      "excluidos": 21782,
+      "despues": 13258
+    },
+    {
+      "paso": "3_salario",
+      "regla": "P05D01 numerico, finito y > 0",
+      "antes": 13258,
+      "excluidos": 0,
+      "despues": 13258
+    },
+    {
+      "paso": "4_antiguedad_componentes",
+      "regla": "P05C07A >= 0 y P05C07B entero entre 0 y 11",
+      "antes": 13258,
+      "excluidos": 0,
+      "despues": 13258
+    },
+    {
+      "paso": "5_antiguedad_edad",
+      "regla": "P05C07A + P05C07B/12 <= edad",
+      "antes": 13258,
+      "excluidos": 0,
+      "despues": 13258
+    },
+    {
+      "paso": "6_horas",
+      "regla": "P05H01A numerico, finito, > 0 y <= 168",
+      "antes": 13258,
+      "excluidos": 0,
+      "despues": 13258
+    }
+  ]
+}

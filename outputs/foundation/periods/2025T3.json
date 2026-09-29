@@ -1,0 +1,176 @@
+{
+  "periodo": "2025T3",
+  "archivo": "Personas_2025T3.xlsx",
+  "sha256": "5c8cb5e37e91ee1e51fe3b8b44995f561b7bb1c3da3c1f58263ca40c1f1b8e4d",
+  "bytes": 47601956,
+  "mib": 45.4,
+  "hoja": "Personas ENEIC T3-2025",
+  "hojas": [
+    "Personas ENEIC T3-2025"
+  ],
+  "hojas_visibles": [
+    "Personas ENEIC T3-2025"
+  ],
+  "columnas_encabezado": 270,
+  "encabezados_vacios": 0,
+  "encabezados_duplicados": [],
+  "filas_datos": 51583,
+  "filas_vacias_omitidas": 0,
+  "columnas_requeridas": [
+    "ANIO",
+    "TRIMESTRE",
+    "DOMINIO",
+    "NUM_HOGAR",
+    "NUM_PERSONA",
+    "FACTOR",
+    "P02A03",
+    "P03A03A",
+    "P05C07A",
+    "P05C07B",
+    "P05H01A",
+    "P05C16",
+    "OCUPADOS",
+    "P05D01"
+  ],
+  "anio_archivo": 2025,
+  "trimestre_calendario": 3,
+  "faltantes_crudos": {
+    "ANIO": 0,
+    "TRIMESTRE": 0,
+    "DOMINIO": 0,
+    "NUM_HOGAR": 0,
+    "NUM_PERSONA": 0,
+    "FACTOR": 0,
+    "P02A03": 0,
+    "P03A03A": 6548,
+    "P05C07A": 29210,
+    "P05C07B": 29210,
+    "P05H01A": 29210,
+    "P05C16": 29210,
+    "OCUPADOS": 29210,
+    "P05D01": 38133
+  },
+  "valores_no_convertibles": {
+    "ANIO": 0,
+    "TRIMESTRE": 0,
+    "DOMINIO": 0,
+    "NUM_HOGAR": 0,
+    "NUM_PERSONA": 0,
+    "FACTOR": 0,
+    "P02A03": 0,
+    "P03A03A": 0,
+    "P05C07A": 0,
+    "P05C07B": 0,
+    "P05H01A": 0,
+    "P05C16": 0,
+    "OCUPADOS": 0,
+    "P05D01": 0
+  },
+  "trimestre_original": {
+    "4": 51583
+  },
+  "anio_original_valores": {
+    "2025": 51583
+  },
+  "codigos_observados": {
+    "DOMINIO": {
+      "1": 17254,
+      "2": 19906,
+      "3": 14423
+    },
+    "P03A03A": {
+      "0": 5837,
+      "1": 1826,
+      "2": 19170,
+      "3": 6320,
+      "4": 8639,
+      "5": 2947,
+      "6": 275,
+      "7": 21,
+      "NULO": 6548
+    },
+    "P05C16": {
+      "1": 1681,
+      "2": 7566,
+      "3": 3212,
+      "4": 991,
+      "5": 5320,
+      "6": 709,
+      "7": 1736,
+      "8": 123,
+      "9": 1035,
+      "NULO": 29210
+    },
+    "OCUPADOS": {
+      "1": 22373,
+      "NULO": 29210
+    }
+  },
+  "codigos_no_reconocidos": {
+    "DOMINIO": 0,
+    "P03A03A": 0,
+    "P05C16": 0,
+    "OCUPADOS": 0
+  },
+  "llaves": {
+    "filas": 51583,
+    "llaves_nulas": 0,
+    "llaves_distintas": 51583,
+    "llaves_duplicadas": 0,
+    "duplicados_exactos_columnas_seleccionadas": 0
+  },
+  "exclusiones": [
+    {
+      "paso": "1_edad",
+      "regla": "P02A03 numerico, finito y >= 15",
+      "antes": 51583,
+      "excluidos": 15767,
+      "despues": 35816
+    },
+    {
+      "paso": "2_ocupado_categoria",
+      "regla": "OCUPADOS == 1 y P05C16 en {1,2,3,4}",
+      "antes": 35816,
+      "excluidos": 22366,
+      "despues": 13450
+    },
+    {
+      "paso": "3_salario",
+      "regla": "P05D01 numerico, finito y > 0",
+      "antes": 13450,
+      "excluidos": 0,
+      "despues": 13450
+    },
+    {
+      "paso": "4_antiguedad_componentes",
+      "regla": "P05C07A >= 0 y P05C07B entero entre 0 y 11",
+      "antes": 13450,
+      "excluidos": 0,
+      "despues": 13450
+    },
+    {
+      "paso": "5_antiguedad_edad",
+      "regla": "P05C07A + P05C07B/12 <= edad",
+      "antes": 13450,
+      "excluidos": 0,
+      "despues": 13450
+    },
+    {
+      "paso": "6_horas",
+      "regla": "P05H01A numerico, finito, > 0 y <= 168",
+      "antes": 13450,
+      "excluidos": 0,
+      "despues": 13450
+    }
+  ],
+  "elegibles": 13450,
+  "desconocidos_elegibles": {
+    "nivel_educativo": 0,
+    "categoria_ocupacional": 0,
+    "dominio": 0
+  },
+  "parquet_seleccion": "data_processed/foundation/selected_typed/2025T3",
+  "parquet_elegibles": "data_processed/foundation/eligible_by_period/2025T3",
+  "segundos": 70.0,
+  "generado_utc": "2026-09-29T05:51:55+00:00"
+}

@@ -1,0 +1,387 @@
+{
+  "k": 2,
+  "medianas_globales": {
+    "salario_mensual": 3000.0,
+    "edad": 33.0,
+    "antiguedad": 2.0,
+    "horas_semanales": 45.0
+  },
+  "perfiles": [
+    {
+      "cluster": 0,
+      "n": 37182,
+      "porcentaje": 70.12164073550213,
+      "estadisticas": {
+        "salario_mensual": {
+          "n": 37182,
+          "media": 3296.021515787209,
+          "mediana": 3000.0,
+          "desviacion": 2469.153877034708,
+          "p25": 1900.0,
+          "p75": 3975.0,
+          "minimo": 1.0,
+          "maximo": 70000.0
+        },
+        "edad": {
+          "n": 37182,
+          "media": 28.51936420848798,
+          "mediana": 28.0,
+          "desviacion": 8.152617489890588,
+          "p25": 22.0,
+          "p75": 34.0,
+          "minimo": 15.0,
+          "maximo": 65.0
+        },
+        "antiguedad": {
+          "n": 37182,
+          "media": 2.5173672744876465,
+          "mediana": 1.5,
+          "desviacion": 2.9365481961181503,
+          "p25": 0.3333333333333333,
+          "p75": 3.6666666666666665,
+          "minimo": 0.0,
+          "maximo": 20.0
+        },
+        "horas_semanales": {
+          "n": 37182,
+          "media": 48.32695928137271,
+          "mediana": 46.0,
+          "desviacion": 18.44988250767058,
+          "p25": 40.0,
+          "p75": 56.0,
+          "minimo": 1.0,
+          "maximo": 126.0
+        }
+      },
+      "composicion": {
+        "nivel_educativo": [
+          {
+            "codigo": "4",
+            "etiqueta": "Diversificado",
+            "n": 13843,
+            "porcentaje": 37.230380291538914,
+            "salario_media": 3547.633172000289,
+            "salario_mediana": 3600.0
+          },
+          {
+            "codigo": "2",
+            "etiqueta": "Primaria",
+            "n": 9974,
+            "porcentaje": 26.82480770265182,
+            "salario_media": 2225.8984359334268,
+            "salario_mediana": 2000.0
+          },
+          {
+            "codigo": "3",
+            "etiqueta": "Básico",
+            "n": 6781,
+            "porcentaje": 18.237319132913775,
+            "salario_media": 2620.5739566435627,
+            "salario_mediana": 2700.0
+          },
+          {
+            "codigo": "5",
+            "etiqueta": "Superior",
+            "n": 4733,
+            "porcentaje": 12.729277607444462,
+            "salario_media": 5272.05958166068,
+            "salario_mediana": 4100.0
+          },
+          {
+            "codigo": "0",
+            "etiqueta": "Ninguno",
+            "n": 1092,
+            "porcentaje": 2.936904954010005,
+            "salario_media": 1898.9615384615386,
+            "salario_mediana": 1800.0
+          },
+          {
+            "codigo": "6",
+            "etiqueta": "Maestría",
+            "n": 522,
+            "porcentaje": 1.403905115378409,
+            "salario_media": 10867.233716475095,
+            "salario_mediana": 10000.0
+          },
+          {
+            "codigo": "1",
+            "etiqueta": "Preprimaria",
+            "n": 221,
+            "porcentaje": 0.5943736216448819,
+            "salario_media": 2135.2171945701357,
+            "salario_mediana": 2200.0
+          },
+          {
+            "codigo": "7",
+            "etiqueta": "Doctorado",
+            "n": 16,
+            "porcentaje": 0.04303157441772901,
+            "salario_media": 18791.25,
+            "salario_mediana": 17000.0
+          }
+        ],
+        "categoria_ocupacional": [
+          {
+            "codigo": "2",
+            "etiqueta": "Empleado de empresa privada",
+            "n": 22244,
+            "porcentaje": 59.82464633424775,
+            "salario_media": 3742.7519780615,
+            "salario_mediana": 3500.0
+          },
+          {
+            "codigo": "3",
+            "etiqueta": "Jornalero o peón",
+            "n": 9353,
+            "porcentaje": 25.154644720563713,
+            "salario_media": 1940.3966641719235,
+            "salario_mediana": 1900.0
+          },
+          {
+            "codigo": "1",
+            "etiqueta": "Empleado de gobierno",
+            "n": 3379,
+            "porcentaje": 9.087730622344145,
+            "salario_media": 5413.180230837526,
+            "salario_mediana": 4500.0
+          },
+          {
+            "codigo": "4",
+            "etiqueta": "Servicio doméstico",
+            "n": 2206,
+            "porcentaje": 5.932978322844387,
+            "salario_media": 1296.1155938349955,
+            "salario_mediana": 1100.0
+          }
+        ],
+        "dominio": [
+          {
+            "codigo": "1",
+            "etiqueta": "Urbano Metropolitano",
+            "n": 15246,
+            "porcentaje": 41.00371147329353,
+            "salario_media": 4057.5217762035945,
+            "salario_mediana": 3700.0
+          },
+          {
+            "codigo": "2",
+            "etiqueta": "Resto Urbano",
+            "n": 14184,
+            "porcentaje": 38.147490721316764,
+            "salario_media": 2984.6627185561197,
+            "salario_mediana": 2800.0
+          },
+          {
+            "codigo": "3",
+            "etiqueta": "Rural Nacional",
+            "n": 7752,
+            "porcentaje": 20.848797805389705,
+            "salario_media": 2368.064886480908,
+            "salario_mediana": 2160.0
+          }
+        ]
+      },
+      "centroide_estandarizado": {
+        "edad": -0.4931833187930847,
+        "antiguedad": -0.3883863683517381,
+        "horas_semanales": 0.10840112776637434,
+        "nivel_educativo_ordinal": 0.1569135748507554
+      },
+      "centroide_unidades_originales": {
+        "edad": 28.519364208488227,
+        "antiguedad": 2.5173672744880675,
+        "horas_semanales": 48.32695928137276,
+        "nivel_educativo_ordinal": 3.302485073422513
+      },
+      "descripcion": "Cluster 0: 37,182 registros (70.1%). Edad mediana 28 años (global 33), antigüedad mediana 1.5 años (global 2.0) y 46 horas semanales medianas (global 45). Nivel educativo más frecuente: Diversificado (37.2%); categoría más frecuente: Empleado de empresa privada (59.8%); dominio más frecuente: Urbano Metropolitano (41.0%). Salario mensual mediano Q3,000 y medio Q3,296, 1.00 veces la mediana global; el salario no participó en el ajuste del cluster."
+    },
+    {
+      "cluster": 1,
+      "n": 15843,
+      "porcentaje": 29.878359264497877,
+      "estadisticas": {
+        "salario_mensual": {
+          "n": 15843,
+          "media": 3716.6024742788613,
+          "mediana": 3000.0,
+          "desviacion": 3709.000234439503,
+          "p25": 1500.0,
+          "p75": 4250.0,
+          "minimo": 30.0,
+          "maximo": 99000.0
+        },
+        "edad": {
+          "n": 15843,
+          "media": 50.837467651328666,
+          "mediana": 50.0,
+          "desviacion": 10.324786533759012,
+          "p25": 43.0,
+          "p75": 58.0,
+          "minimo": 22.0,
+          "maximo": 89.0
+        },
+        "antiguedad": {
+          "n": 15843,
+          "media": 12.69684298007534,
+          "mediana": 12.0,
+          "desviacion": 10.599657378745071,
+          "p25": 3.25,
+          "p75": 19.0,
+          "minimo": 0.0,
+          "maximo": 70.0
+        },
+        "horas_semanales": {
+          "n": 15843,
+          "media": 41.5676955122136,
+          "mediana": 40.0,
+          "desviacion": 18.187509893660582,
+          "p25": 30.0,
+          "p75": 49.0,
+          "minimo": 1.0,
+          "maximo": 126.0
+        }
+      },
+      "composicion": {
+        "nivel_educativo": [
+          {
+            "codigo": "2",
+            "etiqueta": "Primaria",
+            "n": 5848,
+            "porcentaje": 36.91220097203812,
+            "salario_media": 2447.9095417236663,
+            "salario_mediana": 2400.0
+          },
+          {
+            "codigo": "4",
+            "etiqueta": "Diversificado",
+            "n": 3008,
+            "porcentaje": 18.986303099160512,
+            "salario_media": 4941.284906914893,
+            "salario_mediana": 4000.0
+          },
+          {
+            "codigo": "0",
+            "etiqueta": "Ninguno",
+            "n": 2903,
+            "porcentaje": 18.3235498327337,
+            "salario_media": 1717.4863933861523,
+            "salario_mediana": 1500.0
+          },
+          {
+            "codigo": "5",
+            "etiqueta": "Superior",
+            "n": 2085,
+            "porcentaje": 13.160386290475289,
+            "salario_media": 7538.956834532374,
+            "salario_mediana": 6530.0
+          },
+          {
+            "codigo": "3",
+            "etiqueta": "Básico",
+            "n": 1468,
+            "porcentaje": 9.26592185823392,
+            "salario_media": 3236.5871934604907,
+            "salario_mediana": 3400.0
+          },
+          {
+            "codigo": "6",
+            "etiqueta": "Maestría",
+            "n": 249,
+            "porcentaje": 1.5716720318121569,
+            "salario_media": 12545.586345381525,
+            "salario_mediana": 10000.0
+          },
+          {
+            "codigo": "1",
+            "etiqueta": "Preprimaria",
+            "n": 238,
+            "porcentaje": 1.5022407372341098,
+            "salario_media": 2340.9579831932774,
+            "salario_mediana": 2160.0
+          },
+          {
+            "codigo": "7",
+            "etiqueta": "Doctorado",
+            "n": 44,
+            "porcentaje": 0.27772517831218835,
+            "salario_media": 12874.454545454546,
+            "salario_mediana": 12000.0
+          }
+        ],
+        "categoria_ocupacional": [
+          {
+            "codigo": "2",
+            "etiqueta": "Empleado de empresa privada",
+            "n": 6458,
+            "porcentaje": 40.76248185318437,
+            "salario_media": 4331.137039331063,
+            "salario_mediana": 3600.0
+          },
+          {
+            "codigo": "3",
+            "etiqueta": "Jornalero o peón",
+            "n": 4489,
+            "porcentaje": 28.334280123713942,
+            "salario_media": 1749.8732457117399,
+            "salario_mediana": 1584.0
+          },
+          {
+            "codigo": "1",
+            "etiqueta": "Empleado de gobierno",
+            "n": 3196,
+            "porcentaje": 20.172947042858045,
+            "salario_media": 6561.859511889862,
+            "salario_mediana": 6000.0
+          },
+          {
+            "codigo": "4",
+            "etiqueta": "Servicio doméstico",
+            "n": 1700,
+            "porcentaje": 10.730290980243641,
+            "salario_media": 1226.3329411764705,
+            "salario_mediana": 1000.0
+          }
+        ],
+        "dominio": [
+          {
+            "codigo": "1",
+            "etiqueta": "Urbano Metropolitano",
+            "n": 6826,
+            "porcentaje": 43.08527425361358,
+            "salario_media": 4488.783035452681,
+            "salario_mediana": 3600.0
+          },
+          {
+            "codigo": "2",
+            "etiqueta": "Resto Urbano",
+            "n": 5962,
+            "porcentaje": 37.631761661301525,
+            "salario_media": 3479.352063066085,
+            "salario_mediana": 3000.0
+          },
+          {
+            "codigo": "3",
+            "etiqueta": "Rural Nacional",
+            "n": 3055,
+            "porcentaje": 19.282964085084895,
+            "salario_media": 2454.2726677577743,
+            "salario_mediana": 1900.0
+          }
+        ]
+      },
+      "centroide_estandarizado": {
+        "edad": 1.1574539013674825,
+        "antiguedad": 0.9115055196652732,
+        "horas_semanales": -0.25440703986675983,
+        "nivel_educativo_ordinal": -0.36826109575868265
+      },
+      "centroide_unidades_originales": {
+        "edad": 50.837467651328666,
+        "antiguedad": 12.69684298007555,
+        "horas_semanales": 41.56769551221366,
+        "nivel_educativo_ordinal": 2.562456605440774
+      },
+      "descripcion": "Cluster 1: 15,843 registros (29.9%). Edad mediana 50 años (global 33), antigüedad mediana 12.0 años (global 2.0) y 40 horas semanales medianas (global 45). Nivel educativo más frecuente: Primaria (36.9%); categoría más frecuente: Empleado de empresa privada (40.8%); dominio más frecuente: Urbano Metropolitano (43.1%). Salario mensual mediano Q3,000 y medio Q3,717, 1.00 veces la mediana global; el salario no participó en el ajuste del cluster."
+    }
+  ]
+}
